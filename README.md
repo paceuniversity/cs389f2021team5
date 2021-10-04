@@ -3,8 +3,8 @@
 **App name**
 
 **Team** 
-Bisheng Zeng -- bz92714p@pace.edu
-Kai Wang  -- kw87502p@pace.edu
+Bisheng Zeng -- bz92714p@pace.edu /n
+Kai Wang  -- kw87502p@pace.edu /n
 Houqi Zhan -- hz86569p@pace.edu
 **App description**
 
