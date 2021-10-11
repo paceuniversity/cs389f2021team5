@@ -18,6 +18,7 @@ Houqi Zhan -- hz86569p@pace.edu
 **Calendar**
 
 **Product Backlog**
+* Google Docs: https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=8 *
 
 **Architecture & Design**
 
