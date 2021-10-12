@@ -12,7 +12,7 @@ Houqi Zhan -- hz86569p@pace.edu
 
 **App description**
 
-**Idea Proposal**
+**[Idea Proposal](https://docs.google.com/document/d/10HzmWiZ-ZYNHuIuPu6Zc_sZbIoZLwivT6GTfsrmtq9M/edit)**
 * Google Docs: https://docs.google.com/document/d/10HzmWiZ-ZYNHuIuPu6Zc_sZbIoZLwivT6GTfsrmtq9M/edit
 
 **Calendar**
