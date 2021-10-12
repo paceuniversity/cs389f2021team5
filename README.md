@@ -4,11 +4,11 @@
 
 **Team** 
 
-Bisheng Zeng -- bz92714p@pace.edu
+[Bisheng Zeng](https://github.com/Besen-Zeng)
 
-Kai Wang  -- kw87502p@pace.edu 
+[Kai Wang](https://github.com/CarviS0302/CS389) 
 
-Houqi Zhan -- hz86569p@pace.edu
+[Houqi Zhan](https://github.com/HouqiZhan)
 
 **App description**
 
