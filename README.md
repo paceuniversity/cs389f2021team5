@@ -13,12 +13,10 @@ Houqi Zhan -- hz86569p@pace.edu
 **App description**
 
 **[Idea Proposal](https://docs.google.com/document/d/10HzmWiZ-ZYNHuIuPu6Zc_sZbIoZLwivT6GTfsrmtq9M/edit)**
-* Google Docs: https://docs.google.com/document/d/10HzmWiZ-ZYNHuIuPu6Zc_sZbIoZLwivT6GTfsrmtq9M/edit
 
 **Calendar**
 
-**Product Backlog**
-* Google Docs: https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=8 *
+**[Product Backlog](https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=8)**
 
 **Architecture & Design**
 
