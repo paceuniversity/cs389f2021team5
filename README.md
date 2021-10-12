@@ -4,11 +4,11 @@
 
 **Team** 
 
-[Bisheng Zeng](https://github.com/Besen-Zeng)
+* [Bisheng Zeng](https://github.com/Besen-Zeng)
 
-[Kai Wang](https://github.com/CarviS0302/CS389) 
+* [Kai Wang](https://github.com/CarviS0302/CS389) 
 
-[Houqi Zhan](https://github.com/HouqiZhan)
+* [Houqi Zhan](https://github.com/HouqiZhan)
 
 **App description**
 
