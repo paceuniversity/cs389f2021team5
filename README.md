@@ -6,7 +6,7 @@
 
 * [Bisheng Zeng](https://github.com/Besen-Zeng)
 
-* [Kai Wang](https://github.com/CarviS0302/CS389) 
+* [Kai Wang](https://github.com/CarviS0302) 
 
 * [Houqi Zhan](https://github.com/HouqiZhan)
 
