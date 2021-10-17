@@ -16,7 +16,7 @@
 
 **[Calendar] (https://calendar.google.com/calendar/u/0/r?cid=aXZoMmU3NjhzMjRkdGlxZWYwcXZvbzhxcjBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ）
 
-**[Product Backlog]**(https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=8)
+**[Product Backlog]**(https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=8) 
 
 **Architecture & Design**
 
