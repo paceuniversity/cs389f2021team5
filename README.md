@@ -3,7 +3,6 @@
 **App name**
 
 **Team** 
-![videostill-callofpower-01](https://user-images.githubusercontent.com/82823910/137806848-70597d88-bb4c-413e-b1bc-592432c319b1.jpg)
 
 * [Bisheng Zeng](https://github.com/Besen-Zeng)
 
