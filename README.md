@@ -18,6 +18,8 @@
 
 **[Product Backlog](https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=8)**
 
+**[Requirments Discovery](https://docs.google.com/document/d/1LkolHQe2s3tgM076YDKm34zMqBLKcNG2PJ8_w9CIGQ8/edit)**
+
 **Architecture & Design**
 
 **Content**
