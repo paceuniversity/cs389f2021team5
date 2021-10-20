@@ -1,6 +1,6 @@
 # cs389f2021team5
 
-**App name**
+**Covid-OneTool**
 
 **Team** 
 
