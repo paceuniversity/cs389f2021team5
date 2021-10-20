@@ -10,6 +10,8 @@
 | [Bisheng Zeng](https://github.com/Besen-Zeng)       | bz92714p@pace.edu | **Project Manager**   |
 | [Houqi Zhan](https://github.com/HouqiZhan) | hz865689p@pace.edu | **Developer** |
 
+[![](https://www.linkpicture.com/q/team5_1.png)](https://github.com/paceuniversity/cs389f2021team5)
+
 # App description
 
 **[Idea Proposal](https://docs.google.com/document/d/10HzmWiZ-ZYNHuIuPu6Zc_sZbIoZLwivT6GTfsrmtq9M/edit)**
