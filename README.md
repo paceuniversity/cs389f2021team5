@@ -1,9 +1,9 @@
 **cs389f2021team5**
 
-# Covid-OneTool
+# Project Name
+**Covid-OneTool**
 
 # Team
-
 
 [![](https://www.linkpicture.com/q/team5_1.png)](https://github.com/paceuniversity/cs389f2021team5)
 
