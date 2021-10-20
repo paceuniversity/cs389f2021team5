@@ -4,13 +4,15 @@
 
 # Team
 
+
+[![](https://www.linkpicture.com/q/team5_1.png)](https://github.com/paceuniversity/cs389f2021team5)
+
 | Name                                      | Contact Info      | Primary Role    |
 | ----------------------------------------- | ----------------- | --------------- |
 | [Kai Wang](https://github.com/CarviS0302)     | kw87502p@pace.edu | **Product Owner**    |
 | [Bisheng Zeng](https://github.com/Besen-Zeng)       | bz92714p@pace.edu | **Project Manager**   |
 | [Houqi Zhan](https://github.com/HouqiZhan) | hz865689p@pace.edu | **Developer** |
 
-[![](https://www.linkpicture.com/q/team5_1.png)](https://github.com/paceuniversity/cs389f2021team5)
 
 # App description
 
