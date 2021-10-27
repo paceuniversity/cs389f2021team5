@@ -35,7 +35,18 @@
 
 **Sprint 1**
 
-* Sprint planning
+* Sprint planning _**: [Documents Library](https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=1782717252)**_
+
+  - Menu
+  - Document Storage
+  - Edit document
+  - Delete document
+  - Show document
+  - Clear document list
+  - Add member
+  - Edit member
+  - Delete member
+  - Filter
 * Scrums
 * Sprint demo - video and apk (or equivalent)
 * Spring retrospective
