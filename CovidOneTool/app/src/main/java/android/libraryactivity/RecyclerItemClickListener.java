@@ -1,4 +1,4 @@
-package com.example.covid_onetool;
+package android.libraryactivity;
 
 //import android.support.v7.widget.RecyclerView;
 import android.content.Context;
@@ -16,7 +16,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         void onItemLongClick(View view, int position);
     }
     private OnItemClickListener mListener;
-    private GestureDetector mGestureDetector;
+    private GestureDetector mGestureDetector; //手势检测器
 
     public RecyclerItemClickListener(Context context, final RecyclerView recyclerItemView, OnItemClickListener listener){
 
