@@ -1,16 +1,18 @@
-package com.example.covid_onetool;
-
-import androidx.appcompat.app.AppCompatActivity;
+package android.selftestactivity;
 
 import android.content.Intent;
 import android.infoactivity.InfoActivity;
 import android.libraryactivity.LibraryActivity;
 import android.os.Bundle;
-import android.selftestactivity.SelfTestActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.covid_onetool.MainActivity;
+import com.example.covid_onetool.R;
+
+public class SelfTestActivity extends AppCompatActivity {
 
     //加载菜单栏
     public boolean onCreateOptionsMenu(Menu menu){
@@ -22,33 +24,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_selftest);
 
 
 
     }
+
 
     //菜单栏功能：页面跳转
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.menu_Statistics:{
-                Intent goStatistics = new Intent(MainActivity.this, MainActivity.class);
+                Intent goStatistics = new Intent(SelfTestActivity.this, MainActivity.class);
                 startActivity(goStatistics);
                 break;
             }
             case R.id.menu_MyDocument:{
-                Intent goMyDocument = new Intent(MainActivity.this, LibraryActivity.class);
+                Intent goMyDocument = new Intent(SelfTestActivity.this, LibraryActivity.class);
                 startActivity(goMyDocument);
                 break;
             }
             case R.id.menu_SelfTest:{
-                Intent goSelfTest = new Intent(MainActivity.this, SelfTestActivity.class);
+                Intent goSelfTest = new Intent(SelfTestActivity.this, SelfTestActivity.class);
                 startActivity(goSelfTest);
                 break;
             }
             case R.id.menu_MoreInfo:{
-                Intent goMoreInfo = new Intent(MainActivity.this, InfoActivity.class);
+                Intent goMoreInfo = new Intent(SelfTestActivity.this, InfoActivity.class);
                 startActivity(goMoreInfo);
                 break;
             }
@@ -56,4 +59,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
 }
