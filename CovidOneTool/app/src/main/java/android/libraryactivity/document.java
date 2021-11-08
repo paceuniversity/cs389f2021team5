@@ -3,14 +3,18 @@ package android.libraryactivity;
 import org.litepal.crud.DataSupport;
 
 //document类型对象
-public class document extends DataSupport{
+
+public class document extends DataSupport {
+
     private String fileType;
     private String fileName;
     private String fileTime;
     private String fileStatus;
     private String fileDescription;
 
-    public document(){
+
+    public document() {
+
         this.fileType = "?Type?";
         this.fileName = "?Name?";
         this.fileTime = "?Time?";
@@ -18,13 +22,16 @@ public class document extends DataSupport{
         this.fileDescription = "?Description?";
     }
 
-    public document(String type, String name, String time, String status, String description){
+
+    public document(String type, String name, String time, String status, String description) {
+
         this.fileType = type;
         this.fileName = name;
         this.fileTime = time;
         this.fileStatus = status;
         this.fileDescription = description;
     }
+
     public String getFileType() {
         return fileType;
     }
@@ -53,10 +60,5 @@ public class document extends DataSupport{
     public void setFileDescription(String fileDescription) {this.fileDescription = fileDescription;}
 
 
-
-
-
-
-
-
 }
+
