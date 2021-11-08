@@ -49,7 +49,7 @@
   - Filter
 * [**Scrums**](https://docs.google.com/document/d/1XysocCuq3QqqIsNdhdg-6yMqM7jf-PUR_xQvrPCZqzM/edit?usp=sharing) 
 * Sprint demo - video and apk (or equivalent)
-* Spring retrospective
+* [Spring retrospective](https://docs.google.com/document/d/1wZtkJAjd6SJv8jj8dWBOp739AGGKLfOIEgKcv-JDtiE/edit?usp=sharing)
 
 **Sprint 2**
 
