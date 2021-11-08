@@ -7,10 +7,35 @@
         <entry key="..\:/Android/CovidOneTool/app/src/main/res/layout/activity_library.xml" value="0.3619791666666667" />
         <entry key="..\:/Android/CovidOneTool/app/src/main/res/layout/activity_main.xml" value="0.3619791666666667" />
         <entry key="..\:/Android/CovidOneTool/app/src/main/res/layout/activity_selftest.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/drawable/customborder2.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/drawable/ic_launcher_background.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/drawable/leftBottom.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/drawable/leftTop.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/drawable/leftbottom.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/drawable/rightBottom.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/drawable/rightTop.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/drawable/righttop.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/layout/activity_add_new_doc.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/layout/activity_edit_doc.xml" value="0.25181159420289856" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/layout/activity_edit_doc2.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/layout/activity_info.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/layout/activity_library.xml" value="0.17407407407407408" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/layout/activity_main.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/layout/activity_selftest.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/layout/document_empty.xml" value="0.1189873417721519" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/layout/document_item.xml" value="0.14470284237726097" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/layout/editdoc_toolbar.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/menu/editdoc_toolbar.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/menu/menu.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/kaywo/Desktop/Covid-OneTool/cs389f2021team5/CovidOneTool/app/src/main/res/xml/litepal.xml" value="0.2046875" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/app/src/main/assets/litepal.xml" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
