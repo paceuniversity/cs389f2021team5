@@ -36,7 +36,7 @@
 **Sprint 1**
 
 * Sprint planning _**: [Documents Library](https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=1782717252)**_
-(10 User Stroies)
+(7 User Stroies)
   - Menu
   - Document Storage
   - Edit document
