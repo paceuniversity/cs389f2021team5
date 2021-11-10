@@ -51,7 +51,7 @@
 * [Sprint Demo](https://youtu.be/WkR-Vl1aPgE)
 * [Demo Summary](https://docs.google.com/document/d/1m1IFAnAkUjCBVs2ZXXIaFMsEFV1n77WogcojIa9rzzQ/edit?usp=sharing)
 * [Covid-OneTool_Sprint1.apk](https://drive.google.com/file/d/1WSw80jwXFgJx1njYXW21DdE5CPpm90Rx/view?usp=sharing)
-* [Spring retrospective](https://docs.google.com/document/d/1wZtkJAjd6SJv8jj8dWBOp739AGGKLfOIEgKcv-JDtiE/edit?usp=sharing)
+* [Spring Retrospective](https://docs.google.com/document/d/1wZtkJAjd6SJv8jj8dWBOp739AGGKLfOIEgKcv-JDtiE/edit?usp=sharing)
 
 **Sprint 2**
 
