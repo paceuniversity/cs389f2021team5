@@ -47,8 +47,9 @@
   - Edit member
   - Delete member
   - Filter
-* [**Scrums**](https://docs.google.com/document/d/1XysocCuq3QqqIsNdhdg-6yMqM7jf-PUR_xQvrPCZqzM/edit?usp=sharing) 
-* Sprint demo - video and apk (or equivalent)
+* [Scrums](https://docs.google.com/document/d/1XysocCuq3QqqIsNdhdg-6yMqM7jf-PUR_xQvrPCZqzM/edit?usp=sharing) 
+* Sprint demo - video
+* [Covid-OneTool_Sprint1.apk](https://drive.google.com/file/d/1WSw80jwXFgJx1njYXW21DdE5CPpm90Rx/view?usp=sharing)
 * [Spring retrospective](https://docs.google.com/document/d/1wZtkJAjd6SJv8jj8dWBOp739AGGKLfOIEgKcv-JDtiE/edit?usp=sharing)
 
 **Sprint 2**
