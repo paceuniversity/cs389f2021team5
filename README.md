@@ -55,7 +55,16 @@
 
 **Sprint 2**
 
-* Sprint planning
+* Sprint planning _**: [Documents Library](https://docs.google.com/spreadsheets/d/1ZXjuovOq8Lk2VpZvOy0PxUR-YUsTijyQcGmZ7OE__zQ/edit#gid=0)**_
+(8 User Stroies)
+-Jump to hyperlink
+-Distributed map
+-Emergency Contact
+-News
+-Real-time data
+-Notifications
+-Count down
+-Count down Time
 * Scrums
 * Sprint demo - video and apk (or equivalent)
 * Spring retrospective
