@@ -1,9 +1,9 @@
 **cs389f2021team5**
 
 
-# Project Name
-**Covid-OneTool**
+# Covid-OneToo
 
+<img src="https://im7.ezgif.com/tmp/ezgif-7-be55d94b87f5.jpg" width="200" height="200" alt="Covid-OneTool"/><br/>
 
 # Team
 
