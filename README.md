@@ -3,7 +3,7 @@
 
 # Covid-OneToo
 
-<img src="https://im7.ezgif.com/tmp/ezgif-7-be55d94b87f5.jpg" width="200" height="200" alt="Covid-OneTool"/><br/>
+<img src="https://i.ibb.co/cXS848q/Covid-One-Tool-icon.jpg" width="200" height="200" alt="Covid-OneTool"/><br/>
 
 # Team
 
@@ -48,7 +48,7 @@
   - Delete member
   - Filter
 * [Scrums](https://docs.google.com/document/d/1XysocCuq3QqqIsNdhdg-6yMqM7jf-PUR_xQvrPCZqzM/edit?usp=sharing) 
-* Sprint demo - video
+* [Sprint Demo](https://youtu.be/WkR-Vl1aPgE)
 * [Covid-OneTool_Sprint1.apk](https://drive.google.com/file/d/1WSw80jwXFgJx1njYXW21DdE5CPpm90Rx/view?usp=sharing)
 * [Spring retrospective](https://docs.google.com/document/d/1wZtkJAjd6SJv8jj8dWBOp739AGGKLfOIEgKcv-JDtiE/edit?usp=sharing)
 
