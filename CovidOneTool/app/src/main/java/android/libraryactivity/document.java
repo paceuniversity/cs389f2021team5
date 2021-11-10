@@ -7,18 +7,18 @@ public class document extends DataSupport{
     private String fileType;
     private String fileName;
     private String fileTime;
-    private String fileStatus;
+    private Boolean fileStatus;
     private String fileDescription;
 
     public document(){
         this.fileType = "?Type?";
         this.fileName = "?Name?";
         this.fileTime = "?Time?";
-        this.fileStatus = "?Status?";
+        this.fileStatus = false;
         this.fileDescription = "?Description?";
     }
 
-    public document(String type, String name, String time, String status, String description){
+    public document(String type, String name, boolean status, String time, String description){
         this.fileType = type;
         this.fileName = name;
         this.fileTime = time;
@@ -43,10 +43,10 @@ public class document extends DataSupport{
     public void setFileTime(String fileTime) {
         this.fileTime = fileTime;
     }
-    public String getFileStatus(){
+    public boolean getFileStatus(){
         return fileStatus;
     }
-    public void setFileStatus(String fileStatus) {
+    public void setFileStatus(boolean fileStatus) {
         this.fileStatus = fileStatus;
     }
     public String getFileDescription() {return fileDescription;}
