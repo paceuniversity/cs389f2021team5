@@ -42,11 +42,13 @@
   - Edit document
   - Delete document
   - Show document
-  - Clear document list
-  - Add member
-  - Edit member
-  - Delete member
-  - Filter
+  - Clear document list(Delete)
+  - Add member(Delete)
+  - Edit member(Delete)
+  - Delete member(Delete)
+  - Filter(Delete)
+  - Muli-Select
+  - Add file
 * [Scrums](https://docs.google.com/document/d/1XysocCuq3QqqIsNdhdg-6yMqM7jf-PUR_xQvrPCZqzM/edit?usp=sharing) 
 * [Sprint Demo](https://youtu.be/WkR-Vl1aPgE)
 * [Demo Summary](https://docs.google.com/document/d/1m1IFAnAkUjCBVs2ZXXIaFMsEFV1n77WogcojIa9rzzQ/edit?usp=sharing)
