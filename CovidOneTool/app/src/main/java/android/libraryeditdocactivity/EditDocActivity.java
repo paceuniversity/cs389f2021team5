@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Switch;
+
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.ActionBar;
@@ -26,7 +28,7 @@ public class EditDocActivity extends AppCompatActivity {
     private String fileType;
     private String fileName;
     private String fileTime;
-    private String fileStatus;
+    private boolean fileStatus;
     private String fileDescription;
 
     //接收上个Activity传入的标志
@@ -43,11 +45,14 @@ public class EditDocActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_doc);
+        Switch simpleSwitch = (Switch) findViewById(R.id.switchStatus); // initiate Switch
+        simpleSwitch.setTextOn("Valid"); // displayed text of the Switch whenever it is in checked or on state
+        simpleSwitch.setTextOff("Invalid"); // displayed text of the Switch whenever it is in unchecked i.e. off state
         //接受由LibraryActivity传来的doc信息
         Intent intent=getIntent();
         fileType=intent.getStringExtra("fileType");
         fileName=intent.getStringExtra("fileName");
-        fileStatus=intent.getStringExtra("fileStatus");
+        fileStatus=intent.getBooleanExtra("fileStatus", true);
         fileTime=intent.getStringExtra("fileTime");
         fileDescription=intent.getStringExtra("fileDescription");
         signal = intent.getIntExtra("signal", 0);
@@ -63,8 +68,8 @@ public class EditDocActivity extends AppCompatActivity {
         editType.setText(fileType);
         final EditText editName = (EditText)findViewById(R.id.inputName);
         editName.setText(fileName);
-        final EditText editStatus = (EditText)findViewById(R.id.inputStatus);
-        editStatus.setText(fileStatus);
+        final Switch editStatus = (Switch) findViewById(R.id.switchStatus);
+        editStatus.setChecked(fileStatus);
         final EditText editTime = (EditText)findViewById(R.id.inputTime);
         editTime.setText(fileTime);
         final EditText editDescription = (EditText)findViewById(R.id.inputDescription);
@@ -82,8 +87,8 @@ public class EditDocActivity extends AppCompatActivity {
                 String fileType = editType.getText().toString();
                 EditText editName = (EditText)findViewById(R.id.inputName);
                 String fileName = editName.getText().toString();
-                EditText editStatus = (EditText)findViewById(R.id.inputStatus);
-                String fileStatus = editStatus.getText().toString();
+                Switch editStatus = (Switch) findViewById(R.id.switchStatus);
+                Boolean fileStatus = editStatus.isChecked();
                 EditText editTime = (EditText)findViewById(R.id.inputTime);
                 String fileTime = editTime.getText().toString();//未来改格式
                 EditText editDescription = (EditText)findViewById(R.id.inputDescription);
@@ -100,12 +105,14 @@ public class EditDocActivity extends AppCompatActivity {
                     //防止连续储存一样的内容
                     signal = 3;
                     ContentValues values = new ContentValues();
-                    values.put("fileType", fileType);
-                    values.put("fileName", fileName);
-                    values.put("fileStatus", fileStatus);
-                    values.put("fileTime", fileTime);
-                    values.put("fileDescription", fileDescription);
-                    DataSupport.updateAll(document.class, values);
+                    values.put("fileType", mDocument.getFileType().toString());
+                    //update fileName later
+                    values.put("fileStatus", mDocument.getFileStatus());
+                    values.put("fileTime", mDocument.getFileTime().toString());
+                    values.put("fileDescription", mDocument.getFileDescription().toString());
+                    DataSupport.updateAll(document.class, values, "fileName=?", fileName );
+                    values.put("fileName", mDocument.getFileName().toString());
+                    DataSupport.updateAll(document.class, values, "fileName=?", fileName );
 
                 }
                 break;
@@ -126,8 +133,8 @@ public class EditDocActivity extends AppCompatActivity {
                             String fileType = editType.getText().toString();
                             EditText editName = (EditText)findViewById(R.id.inputName);
                             String fileName = editName.getText().toString();
-                            EditText editStatus = (EditText)findViewById(R.id.inputStatus);
-                            String fileStatus = editStatus.getText().toString();
+                            Switch editStatus = (Switch)findViewById(R.id.switchStatus);
+                            boolean fileStatus = editStatus.isChecked();
                             EditText editTime = (EditText)findViewById(R.id.inputTime);
                             String fileTime = editTime.getText().toString();//未来改格式
                             EditText editDescription = (EditText)findViewById(R.id.inputDescription);

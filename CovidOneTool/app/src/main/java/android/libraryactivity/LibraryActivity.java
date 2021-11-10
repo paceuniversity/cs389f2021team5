@@ -69,7 +69,7 @@ public class LibraryActivity extends AppCompatActivity {
                 Intent goEditDocActivity = new Intent(LibraryActivity.this, EditDocActivity.class);
                 goEditDocActivity.putExtra("fileType", "");
                 goEditDocActivity.putExtra("fileName", "");
-                goEditDocActivity.putExtra("fileStatus", "");
+                goEditDocActivity.putExtra("fileStatus", true);
                 goEditDocActivity.putExtra("fileTime", "");
                 goEditDocActivity.putExtra("fileDescription", "");
                 goEditDocActivity.putExtra("signal",0);//0 for New document
@@ -94,7 +94,7 @@ public class LibraryActivity extends AppCompatActivity {
                     document mDocument = documentList.get(position);
                     String fileType = mDocument.getFileType().toString();
                     String fileName = mDocument.getFileName().toString();
-                    String fileStatus = mDocument.getFileStatus().toString();
+                    boolean fileStatus = mDocument.getFileStatus();
                     String fileTime = mDocument.getFileTime().toString();
                     String fileDescription = mDocument.getFileDescription().toString();
                     Intent intent = new Intent(LibraryActivity.this, EditDocActivity.class);
