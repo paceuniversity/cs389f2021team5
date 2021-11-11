@@ -57,7 +57,7 @@
 
 **Sprint 2**
 
-* Sprint planning _**: [Documents Library](https://docs.google.com/spreadsheets/d/1ZXjuovOq8Lk2VpZvOy0PxUR-YUsTijyQcGmZ7OE__zQ/edit#gid=0)**_
+* Sprint planning _**: [Statics & Info section](https://docs.google.com/spreadsheets/d/1ZXjuovOq8Lk2VpZvOy0PxUR-YUsTijyQcGmZ7OE__zQ/edit#gid=0)**_
 (8 User Stroies)
   - Jump to hyperlink
   - Distributed map
