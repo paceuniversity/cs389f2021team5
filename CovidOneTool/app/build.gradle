@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    useLibrary 'org.apache.heep.legacy'
+    useLibrary 'org.apache.http.legacy'
     compileSdk 31
 
     defaultConfig {
