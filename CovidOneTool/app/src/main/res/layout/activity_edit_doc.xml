@@ -50,15 +50,20 @@
                 android:text="Type"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <EditText
+            <Spinner
                 android:id="@+id/inputType"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/context"
-                android:fontFamily="@font/graphiksemibold"
-                android:hint="Pass/Acid Proof/ Vaccination/Others..." />
+                android:spinnerMode="dialog"/>
+
+<!--            <EditText-->
+<!--                android:id="@+id/inputType"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@color/context"-->
+<!--                android:fontFamily="@font/graphiksemibold"-->
+<!--                android:hint="Pass/Acid Proof/ Vaccination/Others..." />-->
 
         </LinearLayout>
 
@@ -160,29 +165,69 @@
             app:layout_constraintTop_toBottomOf="@+id/layoutStatus">
 
             <TextView
-                android:id="@+id/hintTime"
+                android:id="@+id/StartDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/title"
                 android:fontFamily="@font/graphikmedium"
-                android:text="Time"
+                android:text="StartDate"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/inputTime"
+            <TextView
+                android:id="@+id/tv_startDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/context"
                 android:ems="10"
                 android:fontFamily="@font/graphiksemibold"
-                android:hint="MM/DD/YY"
-                android:inputType="time"
-                tools:text="@tools:sample/date/mmddyy" />
+                android:text="select startdate"/>
+
+<!--            <EditText-->
+<!--                android:id="@+id/inputTime"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@color/context"-->
+<!--                android:ems="10"-->
+<!--                android:fontFamily="@font/graphiksemibold"-->
+<!--                android:hint="MM/DD/YY"-->
+<!--                android:inputType="time"-->
+<!--                tools:text="@tools:sample/date/mmddyy" />-->
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layoutExpirationDate"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/layoutTime"
+            app:layout_constraintStart_toStartOf="@id/layoutTime"
+            app:layout_constraintTop_toBottomOf="@+id/layoutTime">
 
+            <TextView
+                android:id="@+id/ExpirationDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/title"
+                android:fontFamily="@font/graphikmedium"
+                android:text="ExpirationDate"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_expirationDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/context"
+                android:ems="10"
+                android:fontFamily="@font/graphiksemibold"
+                android:text="select expiration date"/>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/layoutDescription"
             android:layout_width="match_parent"
@@ -192,9 +237,9 @@
             android:layout_weight="2.5"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@id/layoutTime"
-            app:layout_constraintStart_toStartOf="@id/layoutTime"
-            app:layout_constraintTop_toBottomOf="@+id/layoutTime">
+            app:layout_constraintEnd_toEndOf="@id/layoutExpirationDate"
+            app:layout_constraintStart_toStartOf="@id/layoutExpirationDate"
+            app:layout_constraintTop_toBottomOf="@+id/layoutExpirationDate">
 
             <TextView
                 android:id="@+id/hintDescription"
@@ -219,6 +264,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layoutFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="2.5"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/layoutDescription"
+            app:layout_constraintStart_toStartOf="@id/layoutDescription"
+            app:layout_constraintTop_toBottomOf="@+id/layoutDescription">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/title"
+                android:fontFamily="@font/graphikmedium"
+                android:text="PDF/Img"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/uploadFileBtn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/upload"/>
+            <TextView
+                android:id="@+id/tv_showFile"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/title"
+                android:fontFamily="@font/graphikmedium"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
