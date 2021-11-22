@@ -51,8 +51,8 @@ public class EditDocActivity extends AppCompatActivity implements View.OnClickLi
     private boolean fileStatus;
     private String fileDescription;
 
-    private TextView tv_startDate;
-    private TextView tv_expirationDate;
+    private TextView tv_fileStartDate;
+    private TextView tv_fileExpirationDate;
     private TextView tv_showFile;
 
     //接收上个Activity传入的标志
@@ -135,22 +135,22 @@ public class EditDocActivity extends AppCompatActivity implements View.OnClickLi
         final EditText editDescription = (EditText)findViewById(R.id.inputDescription);
         editDescription.setText(fileDescription);
 
-        tv_startDate = findViewById(R.id.tv_startDate);
-        tv_startDate.setOnClickListener(this);
+        tv_fileStartDate = findViewById(R.id.tv_fileStartDate);
+        tv_fileStartDate.setOnClickListener(this);
         if(!fileStartDate.equals("")){
-            tv_startDate.setText(fileStartDate);
+            tv_fileStartDate.setText(fileStartDate);
         }else{
             //获取系统日期
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
-            tv_startDate.setText(month +"/"+ day +"/"+ year);
+            tv_fileStartDate.setText(month +"/"+ day +"/"+ year);
             fileStartDate = month +"/"+ day +"/"+ year;
         }
-        tv_expirationDate = findViewById(R.id.tv_expirationDate);
-        tv_expirationDate.setOnClickListener(this);
-        tv_expirationDate.setText(fileExpirationDate);
+        tv_fileExpirationDate = findViewById(R.id.tv_fileExpirationDate);
+        tv_fileExpirationDate.setOnClickListener(this);
+        tv_fileExpirationDate.setText(fileExpirationDate);
 
         Button uploadFileButton = findViewById(R.id.uploadFileBtn);
         uploadFileButton.setOnClickListener(this);
@@ -205,8 +205,8 @@ public class EditDocActivity extends AppCompatActivity implements View.OnClickLi
                     document updateDocument = new document();
                     updateDocument.setFileType(mDocument.getFileType());
                     updateDocument.setFileName(mDocument.getFileName());
-                    updateDocument.setStartDate(mDocument.getStartDate());
-                    updateDocument.setExpirationDate(mDocument.getExpirationDate());
+                    updateDocument.setFileStartDate(mDocument.getFileStartDate());
+                    updateDocument.setFileExpirationDate(mDocument.getFileExpirationDate());
                     updateDocument.setFileDescription(mDocument.getFileDescription());
                     updateDocument.update(Integer.parseInt(getIntent().getStringExtra("id")));
                 }
@@ -249,11 +249,11 @@ public class EditDocActivity extends AppCompatActivity implements View.OnClickLi
                                 docToUpdate.setFileName(fileName);
                                 docToUpdate.setFileStatus(fileStatus);
                                 //docToUpdate.setFileTime(fileTime);
-                                docToUpdate.setStartDate(fileStartDate);
-                                docToUpdate.setExpirationDate(fileExpirationDate);
+                                docToUpdate.setFileStartDate(fileStartDate);
+                                docToUpdate.setFileExpirationDate(fileExpirationDate);
                                 docToUpdate.setFileDescription(fileDescription);
                                 //docToUpdate.updateAll("fileName=?",fileName);
-                                docToUpdate.update(Integer.parseInt(getIntent().getStringExtra("id")));
+                                docToUpdate.updateAll("fileName=?", fileName);
                             }
                             finish();
                         }
@@ -275,38 +275,49 @@ public class EditDocActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    //点击时间
+    //点击事件
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_startDate:
+            case R.id.tv_fileStartDate:
                 //显示日历
+                Calendar calendar = Calendar.getInstance();
+                DatePickerDialog date = new DatePickerDialog(EditDocActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        fileStartDate = (month+1) +"/"+ dayOfMonth +"/"+ year;
+                        tv_fileStartDate.setText(fileStartDate);
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)+1);
+                date.show();
+                break;
+
+            case R.id.tv_fileExpirationDate:
                 Calendar calendar1 = Calendar.getInstance();
                 DatePickerDialog date1 = new DatePickerDialog(EditDocActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        fileStartDate = (month+1) +"/"+ dayOfMonth +"/"+ year;
-                        tv_startDate.setText(fileStartDate);
-                        //获取系统日期
-                        int curYear = calendar1.get(calendar1.YEAR);
-                        int curMonth = calendar1.get(calendar1.MONTH);
-                        int curDay = calendar1.get(calendar1.DAY_OF_MONTH);
+                        fileExpirationDate = (month+1) +"/"+ dayOfMonth +"/"+ year;
+                        tv_fileExpirationDate.setText(fileExpirationDate);
+                        int curYear = calendar1.get(Calendar.YEAR);
+                        int curMonth = calendar1.get(Calendar.MONTH)+1;
+                        int curDay = calendar1.get(Calendar.DAY_OF_MONTH);
                         String str1 = year +"-"+ month +"-"+ dayOfMonth;
                         String str2 = curYear +"-"+ curMonth +"-"+ curDay;
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         try{
                             Date d1 = sdf.parse(str1);
                             Date d2 = sdf.parse(str2);
-                            //根据expiration date自动更改文件有效状态
+                            //根据expirationDate自动更改file status，同时该选项对用户不可编辑
                             if(d1.compareTo(d2) > 0){
                                 simpleSwitch.setChecked(false);
-                                simpleSwitch.setEnabled(false);//该变量对用户不可编辑
+                                simpleSwitch.setEnabled(false);
                             }
                         }catch (Exception e){
                             e.printStackTrace();
                         }
                     }
-                },calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH), calendar1.get(Calendar.DAY_OF_MONTH)+1);
+                }, calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH), calendar1.get(Calendar.DAY_OF_MONTH)+1);
                 date1.show();
                 break;
 

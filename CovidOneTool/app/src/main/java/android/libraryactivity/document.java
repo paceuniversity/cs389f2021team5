@@ -50,10 +50,10 @@ public class document extends DataSupport{
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
-    public String getStartDate(){ return fileStartDate;}
-    public void setStartDate(String startDate) { this.fileStartDate = startDate; }
-    public String getExpirationDate() { return fileExpirationDate; }
-    public void setExpirationDate(String expirationDate) { this.fileExpirationDate = expirationDate; }
+    public String getFileStartDate(){ return fileStartDate;}
+    public void setFileStartDate(String startDate) { this.fileStartDate = startDate; }
+    public String getFileExpirationDate() { return fileExpirationDate; }
+    public void setFileExpirationDate(String expirationDate) { this.fileExpirationDate = expirationDate; }
     public boolean getFileStatus(){
         return fileStatus;
     }
