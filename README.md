@@ -18,6 +18,7 @@
 
 # App description
 The goal of the Covid-19 tool is to provide a toolbox for users to manage data and understand Covid-19 conveniently. It is divided into four pages: data page, document page, news page and self-test page. The document page contains information the user adds about the vaccine, input information about the vaccine, when to vaccinate, the name of the vaccine and so on. The news page mainly provides news related to Covid-19 and obtains online news data by connecting to the Internet. The data page mainly explains the various data of Covid-19 so far and obtains deaths, treatment rates and outbreak rates through the Internet. The last one is the self-test page, which mainly provides users with a self-test survey report to keep themselves safe.
+
 **[Idea Proposal](https://docs.google.com/document/d/10HzmWiZ-ZYNHuIuPu6Zc_sZbIoZLwivT6GTfsrmtq9M/edit)**
 
 **[Calendar](https://calendar.google.com/calendar/u/0/r?cid=aXZoMmU3NjhzMjRkdGlxZWYwcXZvbzhxcjBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ)**
