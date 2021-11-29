@@ -28,6 +28,7 @@ android {
     }
 }
 
+
 dependencies {
     implementation fileTree(dir: 'libs', includes: ['*.jar'])
     implementation files('libs\\iTextpdf_5.0.6.jar')
