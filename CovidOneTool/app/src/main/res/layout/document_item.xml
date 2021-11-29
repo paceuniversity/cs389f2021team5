@@ -74,7 +74,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/fileTime"
+                    android:id="@+id/startDate"
                     android:layout_width="215dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/rightbottom"
@@ -89,7 +89,39 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
 
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/expirationDate"
+                    android:layout_width="145dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/leftbottom"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/viewFile"
+                    android:layout_width="215dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rightbottom"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:text="view file"/>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
             <!--
                 <LinearLayout
                     android:layout_width="match_parent"
