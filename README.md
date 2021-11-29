@@ -70,7 +70,7 @@ The goal of the Covid-19 tool is to provide a toolbox for users to manage data a
   - Count down Time
 * [Scrums](https://docs.google.com/document/d/16NhVOoML0KmHQNZjHZLYrAaQzszCzOqU0ItQi2hzC4M/edit?usp=sharing) 
 * Sprint demo - video and apk (or equivalent)
-* Spring retrospective
+* [Sprint Retrospective](https://docs.google.com/document/d/1OuI2U70hMZ7IMTa5eqX4RxxdiDvFV5PcvDD682LGr5s/edit?usp=sharing)
 
 **Sprint 3** 
 
