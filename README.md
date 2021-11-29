@@ -77,7 +77,7 @@ The goal of the Covid-19 tool is to provide a toolbox for users to manage data a
 * Sprint planning
 * Scrums
 * Sprint demo - video and apk (or equivalent)
-* Spring retrospective
+* Sprint retrospective
 
 **Final presentation**
 
