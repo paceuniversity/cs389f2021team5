@@ -32,8 +32,8 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView fileType;
         TextView fileName;
         TextView fileStatus;
-        TextView startDate;
-        TextView expirationDate;
+        TextView fileStartDate;
+        TextView fileExpirationDate;
         CheckBox checkBox;
         TextView filePath;
         //不展示Description
@@ -45,8 +45,8 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             fileType = (TextView)view.findViewById(R.id.fileType);
             fileName = (TextView)view.findViewById(R.id.fileName);
             fileStatus = (TextView)view.findViewById(R.id.fileStatus);
-            startDate = (TextView)view.findViewById(R.id.startDate);
-            expirationDate = view.findViewById(R.id.expirationDate);
+            fileStartDate = (TextView)view.findViewById(R.id.tv_fileStartDate);
+            fileExpirationDate = view.findViewById(R.id.tv_fileExpirationDate);
             //fileDescription = (TextView)view.findViewById(R.id.fileDescription);
             checkBox = (CheckBox) view.findViewById(R.id.checkBox);
             filePath = view.findViewById(R.id.viewFile);
@@ -126,8 +126,8 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((ViewHolder)holder).fileStatus.setText("Invalid");
             }
             // ((ViewHolder)holder).fileTime.setText(mDocument.getFileTime());
-            ((ViewHolder)holder).startDate.setText(mDocument.getStartDate());
-            ((ViewHolder)holder).expirationDate.setText(mDocument.getExpirationDate());
+            ((ViewHolder)holder).fileStartDate.setText(mDocument.getFileStartDate());
+            ((ViewHolder)holder).fileExpirationDate.setText(mDocument.getFileExpirationDate());
             if(mDocument.getFilePath().equals("")){
                 ((ViewHolder)holder).filePath.setText("");
             }
