@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
     private Marker clickMarker;
     private GetAddressTask mGetAddTack = null;
     private View mInfoWindowContent = null;
+    private TextView tvHeal,tvDied,tvConfirm,tvCurConfirm;
+    private EditText etSearch;
 
     //加载菜单栏
     public boolean onCreateOptionsMenu(Menu menu){
@@ -80,6 +83,19 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
         initData();
 
         setContentView(R.layout.activity_main);
+
+        etSearch = findViewById(R.id.etLocation);
+        findViewById(R.id.searchBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toSearch();
+            }
+        });
+
+        tvCurConfirm = findViewById(R.id.tvCurConfirm);
+        tvConfirm = findViewById(R.id.tvConfirm);
+        tvHeal = findViewById(R.id.tvHeal);
+        tvDied = findViewById(R.id.tvDied);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -130,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
                 e.printStackTrace();
                 Message msg = new Message();
                 msg.what = ERROR;
-                msg.obj = "网络请求失败";
+                msg.obj = "Network request failed.";
                 mHandler.sendMessage(msg);
             }
 
@@ -207,9 +223,11 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
                     covidData.setDied(died);
                     covidData.setHeal(heal);
                     Location location = getLocation(MainActivity.this,xArea);
-                    covidData.setLatitude(location.getLatitude());
-                    covidData.setLongitude(location.getLongitude());
-                    list.add(covidData);
+                    if(location!=null) {
+                        covidData.setLatitude(location.getLatitude());
+                        covidData.setLongitude(location.getLongitude());
+                        list.add(covidData);
+                    }
 
                     JSONArray sublist = obj.getJSONArray("subList");
                     for(int j=0;j<sublist.size();j++){
@@ -229,9 +247,11 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
                         sub_covidData.setHeal(sub_heal);
 
                         Location citylocation = getLocation(MainActivity.this,city);
-                        sub_covidData.setLongitude(citylocation.getLongitude());
-                        sub_covidData.setLatitude(citylocation.getLatitude());
-                        list.add(sub_covidData);
+                        if(citylocation!=null) {
+                            sub_covidData.setLongitude(citylocation.getLongitude());
+                            sub_covidData.setLatitude(citylocation.getLatitude());
+                            list.add(sub_covidData);
+                        }
                     }
                 }
             } else if (ERROR == msg.what) {
@@ -255,30 +275,31 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
         mMap = googleMap;
         // Sets the map type to be "hybrid"
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        for(int i=0;i<list.size();i++){
-            CovidData covidData = list.get(i);
-            LatLng latLng = new LatLng(covidData.getLatitude(),covidData.getLongitude());
-            MarkerOptions mMarkOption = new MarkerOptions();
-            mMarkOption.draggable(true);
-            mMarkOption.position(latLng);
-
-            if(covidData.getCity().equals("")) {
-                mMarkOption.title(covidData.getxArea());
-            }else{
-                mMarkOption.title(covidData.getCity());
-            }
-            mMarkOption.snippet("Confirm : "+covidData.getConfirm()+"\ncurConfirm : "+covidData.getCurConfirm()+"\nheal : "+covidData.getHeal()+"\ndied : "+covidData.getDied());
-            mMap.addMarker(mMarkOption);
-            if(i==0){
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            }
-        }
         if(list.size()==0){
             // Add a marker in Sydney and move the camera
             LatLng adelaide = new LatLng(37.34, 126.58);
             // mMap.addMarker(new MarkerOptions().position(adelaide).title("Marker in Adelaide"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(adelaide));
+            tvDied.setText("Died : --");
+            tvConfirm.setText("Confirm : --");
+            tvCurConfirm.setText("Curconfirm : --");
+            tvHeal.setText("Recovered : --");
+        }else{
+            CovidData covidData = list.get(0);
+            LatLng latLng = new LatLng(covidData.getLatitude(),covidData.getLongitude());
+            MarkerOptions mMarkOption = new MarkerOptions();
+            mMarkOption.draggable(true);
+            mMarkOption.position(latLng);
+            if(covidData.getCity().equals("")) {
+                mMarkOption.title(covidData.getxArea());
+            }else{
+                mMarkOption.title(covidData.getCity());
+            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            tvDied.setText("Died : "+covidData.getDied());
+            tvConfirm.setText("Confirm : "+covidData.getConfirm());
+            tvCurConfirm.setText("Curconfirm : "+covidData.getCurConfirm());
+            tvHeal.setText("Heal : "+covidData.getHeal());
         }
         mMap.setInfoWindowAdapter(this);
         //Register click event listener
@@ -448,14 +469,50 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocationName(address,1);
-
-            Location location = new Location(address);
-            location.setLatitude(addresses.get(0).getLatitude());
-            location.setLongitude(addresses.get(0).getLongitude());
-            return location;
+            if(addresses.size()!=0){
+                Location location = new Location(address);
+                location.setLatitude(addresses.get(0).getLatitude());
+                location.setLongitude(addresses.get(0).getLongitude());
+                return location;
+            }else{
+                return null;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return new Location(address);
+        }
+    }
+
+    private void toSearch(){
+        String location = etSearch.getText().toString();
+        if(location.equals("")){
+            Toast.makeText(MainActivity.this,"input country or city",Toast.LENGTH_SHORT).show();
+        }else{
+            boolean flag=true;
+            for(int i=0;i<list.size();i++) {
+                CovidData covidData = list.get(i);
+                if(covidData.getxArea().contains(location)||covidData.getCity().contains(location)){
+                    LatLng latLng = new LatLng(covidData.getLatitude(),covidData.getLongitude());
+                    MarkerOptions mMarkOption = new MarkerOptions();
+                    mMarkOption.draggable(true);
+                    mMarkOption.position(latLng);
+                    if(covidData.getCity().equals("")) {
+                        mMarkOption.title(covidData.getxArea());
+                    }else{
+                        mMarkOption.title(covidData.getCity());
+                    }
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    tvDied.setText("Died : "+covidData.getDied());
+                    tvConfirm.setText("Confirm : "+covidData.getConfirm());
+                    tvCurConfirm.setText("Curconfirm : "+covidData.getCurConfirm());
+                    tvHeal.setText("Recovered : "+covidData.getHeal());
+                    flag=false;
+                    break;
+                }
+            }
+            if(flag){
+                Toast.makeText(MainActivity.this,"no find",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

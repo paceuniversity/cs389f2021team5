@@ -70,8 +70,8 @@ public class LibraryActivity extends AppCompatActivity {
                 goEditDocActivity.putExtra("fileType", "");
                 goEditDocActivity.putExtra("fileName", "");
                 goEditDocActivity.putExtra("fileStatus", true);
-                goEditDocActivity.putExtra("fileStartDate", "");
-                goEditDocActivity.putExtra("fileExpirationDate","");
+                goEditDocActivity.putExtra("startDate", "");
+                goEditDocActivity.putExtra("expirationDate","");
                 goEditDocActivity.putExtra("fileDescription", "");
                 goEditDocActivity.putExtra("signal",0);//0 for New document
                 goEditDocActivity.putExtra("filePath","");
@@ -97,18 +97,16 @@ public class LibraryActivity extends AppCompatActivity {
                     String fileType = mDocument.getFileType().toString();
                     String fileName = mDocument.getFileName().toString();
                     boolean fileStatus = mDocument.getFileStatus();
-                    //   String fileTime = mDocument.getFileTime().toString();
-                    String fileStartDate = mDocument.getFileStartDate();
-                    String fileExpirationDate = mDocument.getFileExpirationDate();
+                    String startDate = mDocument.getStartDate();
+                    String expirationDate = mDocument.getExpirationDate();
                     String fileDescription = mDocument.getFileDescription().toString();
                     Intent intent = new Intent(LibraryActivity.this, EditDocActivity.class);
                     intent.putExtra("id",mDocument.getId()+"");
                     intent.putExtra("fileType", fileType);
                     intent.putExtra("fileName", fileName);
                     intent.putExtra("fileStatus", fileStatus);
-                    //  intent.putExtra("fileTime", fileTime);
-                    intent.putExtra("fileStartDate",fileStartDate);
-                    intent.putExtra("fileExpirationDate",fileExpirationDate);
+                    intent.putExtra("startDate",startDate);
+                    intent.putExtra("expirationDate",expirationDate);
                     intent.putExtra("fileDescription", fileDescription);
                     intent.putExtra("signal", 1);
                     intent.putExtra("filePath",mDocument.getFilePath());
@@ -260,7 +258,7 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
 
-}
+    }
 
 
 

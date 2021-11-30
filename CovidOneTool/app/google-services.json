@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "814589097135",
+    "project_id": "covid-onetool",
+    "storage_bucket": "covid-onetool.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814589097135:android:7fa953550d010291d4105a",
+        "android_client_info": {
+          "package_name": "com.example.covid_onetool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814589097135-53hgho6ahsbbl0fcqj1kmseqhkru6ach.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAECO1Diy2NLJdM24FAVZMvmelYgSgL4S4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814589097135-53hgho6ahsbbl0fcqj1kmseqhkru6ach.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

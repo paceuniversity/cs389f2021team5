@@ -10,4 +10,5 @@
     <color name="title">#8696a7</color>
     <color name="context">#c1cbd7</color>
     <color name="colorPrimary">#3F51B5</color>
+    <color name="red">#FF4500</color>
 </resources>
