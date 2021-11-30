@@ -32,10 +32,11 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView fileType;
         TextView fileName;
         TextView fileStatus;
-        TextView fileStartDate;
-        TextView fileExpirationDate;
+        TextView startDate;
+        TextView expirationDate;
         CheckBox checkBox;
         TextView filePath;
+        TextView tvDetail;
         //不展示Description
         //TextView fileDescription;
 
@@ -45,11 +46,11 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             fileType = (TextView)view.findViewById(R.id.fileType);
             fileName = (TextView)view.findViewById(R.id.fileName);
             fileStatus = (TextView)view.findViewById(R.id.fileStatus);
-            fileStartDate = (TextView)view.findViewById(R.id.tv_fileStartDate);
-            fileExpirationDate = view.findViewById(R.id.tv_fileExpirationDate);
-            //fileDescription = (TextView)view.findViewById(R.id.fileDescription);
+            startDate = (TextView)view.findViewById(R.id.startDate);
+            expirationDate = view.findViewById(R.id.expirationDate);
             checkBox = (CheckBox) view.findViewById(R.id.checkBox);
             filePath = view.findViewById(R.id.viewFile);
+            tvDetail = view.findViewById(R.id.tvDetail);
         }
     }
 
@@ -125,12 +126,8 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else {
                 ((ViewHolder)holder).fileStatus.setText("Invalid");
             }
-            // ((ViewHolder)holder).fileTime.setText(mDocument.getFileTime());
-            ((ViewHolder)holder).fileStartDate.setText(mDocument.getFileStartDate());
-            ((ViewHolder)holder).fileExpirationDate.setText(mDocument.getFileExpirationDate());
-            if(mDocument.getFilePath().equals("")){
-                ((ViewHolder)holder).filePath.setText("");
-            }
+            ((ViewHolder)holder).startDate.setText(mDocument.getStartDate());
+            ((ViewHolder)holder).expirationDate.setText(mDocument.getExpirationDate());
         }
 
 

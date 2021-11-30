@@ -56,15 +56,6 @@
                 android:layout_height="match_parent"
                 android:spinnerMode="dialog"/>
 
-<!--            <EditText-->
-<!--                android:id="@+id/inputType"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@color/context"-->
-<!--                android:fontFamily="@font/graphiksemibold"-->
-<!--                android:hint="Pass/Acid Proof/ Vaccination/Others..." />-->
-
         </LinearLayout>
 
         <LinearLayout
@@ -174,7 +165,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
             <TextView
-                android:id="@+id/tv_fileStartDate"
+                android:id="@+id/tv_startDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -219,7 +210,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
             <TextView
-                android:id="@+id/tv_fileExpirationDate"
+                android:id="@+id/tv_expirationDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -291,7 +282,7 @@
                 android:layout_height="100dp"
                 android:background="@drawable/upload"/>
             <TextView
-                android:id="@+id/tv_showFile"
+                android:id="@+id/tv_uploadFile"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="@color/title"
