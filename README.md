@@ -1,9 +1,9 @@
 **cs389f2021team5**
 
 
-# Project Name
-**Covid-OneTool**
+# Covid-OneTool
 
+<img src="https://i.ibb.co/cXS848q/Covid-One-Tool-icon.jpg" width="200" height="200" alt="Covid-OneTool"/><br/>
 
 # Team
 
@@ -17,6 +17,7 @@
 
 
 # App description
+The goal of the Covid-19 tool is to provide a toolbox for users to manage data and understand Covid-19 conveniently. It is divided into four pages: data page, document page, news page and self-test page. The document page allows user to upload their documents about Covid to the local storage of the phone, such as vaccination certificates, passes, etc. This will help users to store all their documents about the Covid. The news page mainly provides news related to Covid-19 and obtains online news data by connecting to the Internet. The data page mainly explains the various data of Covid-19 so far and obtains deaths, treatment rates and outbreak rates through the Internet. The last one is the self-test page, which helps users compare their symptoms with those of Covid.
 
 **[Idea Proposal](https://docs.google.com/document/d/10HzmWiZ-ZYNHuIuPu6Zc_sZbIoZLwivT6GTfsrmtq9M/edit)**
 
@@ -36,34 +37,47 @@
 **Sprint 1**
 
 * Sprint planning _**: [Documents Library](https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=1782717252)**_
-(10 User Stroies)
+(7 User Stroies)
   - Menu
   - Document Storage
   - Edit document
   - Delete document
   - Show document
-  - Clear document list
-  - Add member
-  - Edit member
-  - Delete member
-  - Filter
-* [**Scrums**](https://docs.google.com/document/d/1XysocCuq3QqqIsNdhdg-6yMqM7jf-PUR_xQvrPCZqzM/edit?usp=sharing) 
-* Sprint demo - video and apk (or equivalent)
-* [Spring retrospective](https://docs.google.com/document/d/1wZtkJAjd6SJv8jj8dWBOp739AGGKLfOIEgKcv-JDtiE/edit?usp=sharing)
+  - Clear document list(Delete)
+  - Add member(Delete)
+  - Edit member(Delete)
+  - Delete member(Delete)
+  - Filter(Delete)
+  - Muli-Select(New)
+  - Add file(New)
+* [Scrums](https://docs.google.com/document/d/1XysocCuq3QqqIsNdhdg-6yMqM7jf-PUR_xQvrPCZqzM/edit?usp=sharing) 
+* [Sprint Demo](https://youtu.be/WkR-Vl1aPgE)
+* [Demo Summary](https://docs.google.com/document/d/1m1IFAnAkUjCBVs2ZXXIaFMsEFV1n77WogcojIa9rzzQ/edit?usp=sharing)
+* [Covid-OneTool_Sprint1.apk](https://drive.google.com/file/d/1WSw80jwXFgJx1njYXW21DdE5CPpm90Rx/view?usp=sharing)
+* [Sprint Retrospective](https://docs.google.com/document/d/1wZtkJAjd6SJv8jj8dWBOp739AGGKLfOIEgKcv-JDtiE/edit?usp=sharing)
 
 **Sprint 2**
 
-* Sprint planning
-* Scrums
+* Sprint planning _**: [Statics & Info section](https://docs.google.com/spreadsheets/d/1ZXjuovOq8Lk2VpZvOy0PxUR-YUsTijyQcGmZ7OE__zQ/edit#gid=0)**_
+(8 User Stroies)
+  - Jump to hyperlink
+  - Distributed map
+  - Emergency Contact
+  - News
+  - Real-time data
+  - Notifications
+  - Count down
+  - Count down Time
+* [Scrums](https://docs.google.com/document/d/16NhVOoML0KmHQNZjHZLYrAaQzszCzOqU0ItQi2hzC4M/edit?usp=sharing) 
 * Sprint demo - video and apk (or equivalent)
-* Spring retrospective
+* [Sprint Retrospective](https://docs.google.com/document/d/1OuI2U70hMZ7IMTa5eqX4RxxdiDvFV5PcvDD682LGr5s/edit?usp=sharing)
 
 **Sprint 3** 
 
 * Sprint planning
 * Scrums
 * Sprint demo - video and apk (or equivalent)
-* Spring retrospective
+* Sprint retrospective
 
 **Final presentation**
 
