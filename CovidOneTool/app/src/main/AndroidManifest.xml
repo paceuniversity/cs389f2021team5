@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.covid_onetool">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
@@ -9,11 +9,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CovidOneTool"
-
-        >
+        android:theme="@style/Theme.CovidOneTool">
+        <activity
+            android:name="android.libraryeditdocactivity.ViewFileActivity" />
         <activity
             android:name=".MainActivity"
+            android:label="@string/app_name"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,14 +22,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="android.libraryactivity.LibraryActivity"
+            android:label="Documents"/>
+        <activity
+            android:name="android.libraryeditdocactivity.EditDocActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="android.infoactivity.InfoActivity" />
+        <activity android:name="android.selftestactivity.SelfTestActivity" />
+        <activity android:name="android.selftestactivity.testActivity" />
 
-        <activity android:name="android.libraryactivity.LibraryActivity" />
-        <activity android:name="android.libraryeditdocactivity.EditDocActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name="android.infoactivity.InfoActivity"/>
-        <activity android:name="android.selftestactivity.SelfTestActivity"/>
-        <activity android:name="android.selftestactivity.testActivity"/>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.covid_onetool.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

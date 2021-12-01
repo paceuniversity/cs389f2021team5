@@ -69,10 +69,12 @@ public class LibraryActivity extends AppCompatActivity {
                 Intent goEditDocActivity = new Intent(LibraryActivity.this, EditDocActivity.class);
                 goEditDocActivity.putExtra("fileType", "");
                 goEditDocActivity.putExtra("fileName", "");
-                goEditDocActivity.putExtra("fileStatus", "");
-                goEditDocActivity.putExtra("fileTime", "");
+                goEditDocActivity.putExtra("fileStatus", true);
+                goEditDocActivity.putExtra("startDate", "");
+                goEditDocActivity.putExtra("expirationDate","");
                 goEditDocActivity.putExtra("fileDescription", "");
                 goEditDocActivity.putExtra("signal",0);//0 for New document
+                goEditDocActivity.putExtra("filePath","");
                 startActivity(goEditDocActivity);
             }
         });
@@ -94,16 +96,20 @@ public class LibraryActivity extends AppCompatActivity {
                     document mDocument = documentList.get(position);
                     String fileType = mDocument.getFileType().toString();
                     String fileName = mDocument.getFileName().toString();
-                    String fileStatus = mDocument.getFileStatus().toString();
-                    String fileTime = mDocument.getFileTime().toString();
+                    boolean fileStatus = mDocument.getFileStatus();
+                    String startDate = mDocument.getStartDate();
+                    String expirationDate = mDocument.getExpirationDate();
                     String fileDescription = mDocument.getFileDescription().toString();
                     Intent intent = new Intent(LibraryActivity.this, EditDocActivity.class);
+                    intent.putExtra("id",mDocument.getId()+"");
                     intent.putExtra("fileType", fileType);
                     intent.putExtra("fileName", fileName);
                     intent.putExtra("fileStatus", fileStatus);
-                    intent.putExtra("fileTime", fileTime);
+                    intent.putExtra("startDate",startDate);
+                    intent.putExtra("expirationDate",expirationDate);
                     intent.putExtra("fileDescription", fileDescription);
                     intent.putExtra("signal", 1);
+                    intent.putExtra("filePath",mDocument.getFilePath());
                     startActivity(intent);
                 }else if(documentList.size()>0){
                     CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
@@ -113,6 +119,15 @@ public class LibraryActivity extends AppCompatActivity {
                     }else{
                         deleStr.put(position, documentAdapter.mDocumentList.get(position).getFileName());
                         checkBox.setChecked(true);
+                    }
+                    //判断deleStr是否为空
+                    if(deleStr.size()==0){
+                        isDeleteState = false;
+                        deleStr.clear();
+                        documentAdapter.isSelected.put(position, false);
+                        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
+                        adapter = new documentAdapter(documentList, false);
+                        recyclerView.setAdapter(adapter);
                     }
                 }
 

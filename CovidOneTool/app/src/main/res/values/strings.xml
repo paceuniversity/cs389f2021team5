@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Covid-OneTool</string>
-   </resources>
+    <string name="empty_library">Click button below to add new document!</string>
+    <string name="type">Type</string>
+    <string name="name">Name</string>
+    <string name="time">Time</string>
+    <string name="empty_content">Press [ADD] button to add a new document!</string>
+    <string name="status">Status</string>
+</resources>

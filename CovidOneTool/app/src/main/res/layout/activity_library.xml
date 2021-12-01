@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/context"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_doc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/context"
+         />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="bottom|right">
+    <Button
+        android:id="@+id/button_DeleteDoc"
+        android:layout_width="114dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="30dp"
+        android:text="Delete"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/button_AddDoc"
+        android:layout_width="114dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
+        android:text="ADD"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
+    </LinearLayout>
+
+</LinearLayout>
