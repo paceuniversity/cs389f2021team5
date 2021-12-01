@@ -32,6 +32,7 @@ The goal of the Covid-19 tool is to provide a toolbox for users to manage data a
 
 
 
+
 # Content
 
 **Sprint 1**
@@ -91,8 +92,12 @@ The goal of the Covid-19 tool is to provide a toolbox for users to manage data a
 
 **Tools**
 
- [![](https://i.imgur.com/sUs2pG4.png)](https://github.com/) [![](https://i.imgur.com/DMpHchR.png)](https://developer.android.com/studio) [![](https://i.imgur.com/1jS4ZyR.png)](https://www.google.com/drive/) [![](https://i.imgur.com/UFflCJs.png)](https://www.adobe.com/products/photoshop.html) 
- 
- **Database**
+ [![](https://i.imgur.com/sUs2pG4.png)](https://github.com/) [![](https://i.imgur.com/DMpHchR.png)](https://developer.android.com/studio) [![](https://i.imgur.com/1jS4ZyR.png)](https://www.google.com/drive/) [![](https://i.imgur.com/UFflCJs.png)](https://www.adobe.com/products/photoshop.html)
+
+[![](https://mapopen-website-wiki.cdn.bcebos.com/LOGO/lbsyunlogo_0724.png)](https://lbsyun.baidu.com/index.php?title=%E9%A6%96%E9%A1%B5) 
+
+[![](https://i.ibb.co/rdSKhWz/Google-maps-platform-1200x675.png)](https://developers.google.com/maps) 
+
+**Database**
  
  [![](https://github.com/guolindev/LitePal/blob/master/sample/src/main/logo/mini_logo.png?raw=true)](https://github.com/guolindev/LitePal) 
