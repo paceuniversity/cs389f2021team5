@@ -68,7 +68,7 @@ The goal of the Covid-19 tool is to provide a toolbox for users to manage data a
   - Clear document list
 * [Scrums](https://docs.google.com/document/d/16NhVOoML0KmHQNZjHZLYrAaQzszCzOqU0ItQi2hzC4M/edit?usp=sharing) 
 * [Sprint Demo](https://youtu.be/WkR-Vl1aPgE)
-* [Demo Summary](https://docs.google.com/document/d/1m1IFAnAkUjCBVs2ZXXIaFMsEFV1n77WogcojIa9rzzQ/edit?usp=sharing)
+* [Demo Summary](https://docs.google.com/document/d/1x2-iMUvIptzIlhAH_zRwLADzpctb_PpOju5ySHgOFj0/edit)
 * [Covid-OneTool_Sprint2.apk](https://drive.google.com/file/d/1WSw80jwXFgJx1njYXW21DdE5CPpm90Rx/view?usp=sharing)
 * [Sprint Retrospective](https://docs.google.com/document/d/1OuI2U70hMZ7IMTa5eqX4RxxdiDvFV5PcvDD682LGr5s/edit?usp=sharing)
 
