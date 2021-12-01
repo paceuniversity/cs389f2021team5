@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.infoactivity.InfoActivity;
 import android.libraryactivity.LibraryActivity;
+import android.newsroom.NewsroomActivity;
+import android.newsroom.NewsDisplay;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,38 +41,7 @@ public class NewsroomActivity extends AppCompatActivity {
         return true;
     }
 
-    //菜单栏功能：页面跳转
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.menu_Statistics:{
-                Intent goStatistics = new Intent(NewsroomActivity.this, MainActivity.class);
-                startActivity(goStatistics);
-                break;
-            }
-            case R.id.menu_MyDocument:{
-                Intent goMyDocument = new Intent(NewsroomActivity.this, LibraryActivity.class);
-                startActivity(goMyDocument);
-                break;
-            }
-            case R.id.menu_SelfTest:{
-                Intent goSelfTest = new Intent(NewsroomActivity.this, SelfTestActivity.class);
-                startActivity(goSelfTest);
-                break;
-            }
-            case R.id.menu_Newsroom:{
-                Intent goNewsroom = new Intent(NewsroomActivity.this, NewsroomActivity.class);
-                startActivity(goNewsroom);
-            }
-            case R.id.menu_MoreInfo:{
-                Intent goMoreInfo = new Intent(NewsroomActivity.this, InfoActivity.class);
-                startActivity(goMoreInfo);
-                break;
-            }
 
-        }
-        return true;
-    }
 
 
     @SuppressLint("HandlerLeak")
@@ -144,6 +115,39 @@ public class NewsroomActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    //菜单栏功能：页面跳转
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menu_Statistics:{
+                Intent goStatistics = new Intent(NewsroomActivity.this, MainActivity.class);
+                startActivity(goStatistics);
+                break;
+            }
+            case R.id.menu_MyDocument:{
+                Intent goMyDocument = new Intent(NewsroomActivity.this, LibraryActivity.class);
+                startActivity(goMyDocument);
+                break;
+            }
+            case R.id.menu_SelfTest:{
+                Intent goSelfTest = new Intent(NewsroomActivity.this, SelfTestActivity.class);
+                startActivity(goSelfTest);
+                break;
+            }
+            case R.id.menu_Newsroom:{
+                Intent goNewsroom = new Intent(NewsroomActivity.this, NewsroomActivity.class);
+                startActivity(goNewsroom);
+            }
+            case R.id.menu_MoreInfo:{
+                Intent goMoreInfo = new Intent(NewsroomActivity.this, InfoActivity.class);
+                startActivity(goMoreInfo);
+                break;
+            }
+
+        }
+        return true;
     }
 
 }

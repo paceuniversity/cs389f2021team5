@@ -50,5 +50,7 @@ dependencies {
     implementation 'com.itextpdf:itextg:5.5.9'
     implementation 'com.google.firebase:firebase-core:18.0.3'
     implementation 'org.slf4j:slf4j-simple:1.7.25'
+    //  implementation 'com.google.maps:google-maps-services'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
     implementation 'org.jsoup:jsoup:1.14.3'
 }

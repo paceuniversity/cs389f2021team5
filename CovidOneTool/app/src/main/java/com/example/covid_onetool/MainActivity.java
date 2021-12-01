@@ -3,17 +3,19 @@ package com.example.covid_onetool;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.infoactivity.InfoActivity;
 import android.libraryactivity.LibraryActivity;
-import android.location.Geocoder;
 import android.location.Location;
 import android.newsroom.NewsroomActivity;
 import android.os.AsyncTask;
@@ -46,20 +48,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import android.location.Address;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 
-public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWindowAdapter, GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener,OnMapReadyCallback,
+public class MainActivity extends AppCompatActivity implements OnMyLocationButtonClickListener,OnMyLocationClickListener,GoogleMap.InfoWindowAdapter, GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener,OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback{
 
     private GoogleMap mMap;
@@ -70,6 +74,19 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
     private View mInfoWindowContent = null;
     private TextView tvHeal,tvDied,tvConfirm,tvCurConfirm;
     private EditText etSearch;
+    private String baiduMapKey = "B5j2lNjl4TtDwa73vpqeF9aSX3edmam6";
+    /**
+     * Request code for location permission request.
+     *
+     * @see #onRequestPermissionsResult(int, String[], int[])
+     */
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+
+    /**
+     * Flag indicating whether a requested permission has been denied after returning in
+     * {@link #onRequestPermissionsResult(int, String[], int[])}.
+     */
+    private boolean permissionDenied = false;
 
     //加载菜单栏
     public boolean onCreateOptionsMenu(Menu menu){
@@ -138,8 +155,10 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
     }
 
     private void initData(){
-        String appid="12320";
-        String secret="6ea206153eccf95c392ef6000797f7e0";
+        //data: https://www.wapi.cn/pneumonia.html
+        String appid="12571";
+        String secret="4173b99a74d74a4fed17e0216fa88510";
+        //data API key above
         String str="appid"+appid+"formatjson"+secret;
         String md5str=md5(str);
         String url="https://oyen.api.storeapi.net/api/94/220?appid="+appid+"&format=json&sign="+md5str;
@@ -151,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
                 e.printStackTrace();
                 Message msg = new Message();
                 msg.what = ERROR;
-                msg.obj = "Network request failed.";
+                msg.obj = "网络请求失败";
                 mHandler.sendMessage(msg);
             }
 
@@ -227,14 +246,11 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
                     covidData.setCurConfirm(curConfirm);
                     covidData.setDied(died);
                     covidData.setHeal(heal);
-                    Location location = getLocation(MainActivity.this,xArea);
-                    if(location!=null) {
-                        covidData.setLatitude(location.getLatitude());
-                        covidData.setLongitude(location.getLongitude());
-                        list.add(covidData);
-                    }
+                    getLocation(xArea,covidData);
 
                     JSONArray sublist = obj.getJSONArray("subList");
+                    //  getLocation(xArea,covidData,sublist);
+
                     for(int j=0;j<sublist.size();j++){
                         JSONObject subobj = sublist.getJSONObject(j);
                         String city = subobj.getString("city");
@@ -250,15 +266,13 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
                         sub_covidData.setCurConfirm(sub_curConfirm);
                         sub_covidData.setDied(sub_died);
                         sub_covidData.setHeal(sub_heal);
-
-                        Location citylocation = getLocation(MainActivity.this,city);
-                        if(citylocation!=null) {
-                            sub_covidData.setLongitude(citylocation.getLongitude());
-                            sub_covidData.setLatitude(citylocation.getLatitude());
-                            list.add(sub_covidData);
-                        }
+                        sub_covidData.setLatitude(0.0);
+                        sub_covidData.setLongitude(0.0);
+                        list.add(sub_covidData);
+                        // getLocation(city,sub_covidData);
                     }
                 }
+                System.out.println("-----");
             } else if (ERROR == msg.what) {
                 String info = (String) msg.obj;
                 Toast.makeText(MainActivity.this, info, Toast.LENGTH_SHORT).show();
@@ -288,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
             tvDied.setText("Died : --");
             tvConfirm.setText("Confirm : --");
             tvCurConfirm.setText("Curconfirm : --");
-            tvHeal.setText("Recovered : --");
+            tvHeal.setText("Heal : --");
         }else{
             CovidData covidData = list.get(0);
             LatLng latLng = new LatLng(covidData.getLatitude(),covidData.getLongitude());
@@ -304,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
             tvDied.setText("Died : "+covidData.getDied());
             tvConfirm.setText("Confirm : "+covidData.getConfirm());
             tvCurConfirm.setText("Curconfirm : "+covidData.getCurConfirm());
-            tvHeal.setText("Recovered : "+covidData.getHeal());
+            tvHeal.setText("Heal : "+covidData.getHeal());
         }
         mMap.setInfoWindowAdapter(this);
         //Register click event listener
@@ -466,42 +480,70 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
 
     /**
      * 根据地名返回一个有经纬度location,如果查询不到经纬度  则默认经纬度是0
-     * @param context
      * @param address
      * @return
      */
-    public static Location getLocation(Context context, String address) {
+    //public void getLocation(String address,CovidData covidData,JSONArray sublist) {
+    public void getLocation(String address,CovidData covidData) {
+
         try {
-            Object[] obj = new MapUtils().getCoordinate(address);
-            if (obj != null) {
-                Location location = new Location(address);
-                location.setLatitude((double)obj[0]);
-                location.setLongitude((double)obj[1]);
-                return location;
-            }else{
-                return null;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            address = java.net.URLEncoder.encode(address, "UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
         }
-//        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-//        try {
+        String url = String.format("http://api.map.baidu.com/geocoder?address=%s&output=json&key=%s&city=", address, baiduMapKey, "");
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .get()
+                            .build();
+                    Call call = client.newCall(request);
+                    Response response = call.execute();
+                    if (response.isSuccessful()) {
+                        String info = response.body().string();
+                        JSONObject jsonObject = JSON.parseObject(info);
+
+                        String status=jsonObject.getString("status");
+                        if(status.equals("OK")){
+                            Object object = jsonObject.get("result");
+                            if (object instanceof JSONObject) {
+                                JSONObject resultObject = jsonObject.getJSONObject("result");
+                                JSONObject locationObj = resultObject.getJSONObject("location");
+                                covidData.setLongitude(locationObj.getFloatValue("lng"));
+                                covidData.setLatitude(locationObj.getFloatValue("lat"));
+                                list.add(covidData);
+//                                for(int j=0;j<sublist.size();j++){
+//                                    JSONObject subobj = sublist.getJSONObject(j);
+//                                    String city = subobj.getString("city");
+//                                    String sub_confirm = subobj.getString("confirm");
+//                                    String sub_died = subobj.getString("died");
+//                                    String sub_curConfirm=subobj.getString("curConfirm");
+//                                    String sub_heal = subobj.getString("heal");
 //
-//
-//            List<Address> addresses = geocoder.getFromLocationName(address,5);
-//            if(addresses.size()!=0){
-//                Location location = new Location(address);
-//                location.setLatitude(addresses.get(0).getLatitude());
-//                location.setLongitude(addresses.get(0).getLongitude());
-//                return location;
-//            }else{
-//                return null;
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new Location(address);
-//        }
+//                                    CovidData sub_covidData = new CovidData();
+//                                    sub_covidData.setxArea(covidData.getxArea());
+//                                    sub_covidData.setCity(city);
+//                                    sub_covidData.setConfirm(sub_confirm);
+//                                    sub_covidData.setCurConfirm(sub_curConfirm);
+//                                    sub_covidData.setDied(sub_died);
+//                                    sub_covidData.setHeal(sub_heal);
+//                                    sub_covidData.setLatitude(locationObj.getFloatValue("lng"));
+//                                    sub_covidData.setLongitude(locationObj.getFloatValue("lat"));
+//                                    list.add(sub_covidData);
+//                                }
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private void toSearch(){
@@ -512,21 +554,17 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
             boolean flag=true;
             for(int i=0;i<list.size();i++) {
                 CovidData covidData = list.get(i);
-                if(covidData.getxArea().contains(location)||covidData.getCity().contains(location)){
+                if(covidData.getxArea().contains(location)){
                     LatLng latLng = new LatLng(covidData.getLatitude(),covidData.getLongitude());
                     MarkerOptions mMarkOption = new MarkerOptions();
                     mMarkOption.draggable(true);
                     mMarkOption.position(latLng);
-                    if(covidData.getCity().equals("")) {
-                        mMarkOption.title(covidData.getxArea());
-                    }else{
-                        mMarkOption.title(covidData.getCity());
-                    }
+                    mMarkOption.title(covidData.getxArea());
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                     tvDied.setText("Died : "+covidData.getDied());
                     tvConfirm.setText("Confirm : "+covidData.getConfirm());
                     tvCurConfirm.setText("Curconfirm : "+covidData.getCurConfirm());
-                    tvHeal.setText("Recovered : "+covidData.getHeal());
+                    tvHeal.setText("Heal : "+covidData.getHeal());
                     flag=false;
                     break;
                 }
@@ -536,4 +574,69 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
             }
         }
     }
+
+    /**
+     * Enables the My Location layer if the fine location permission has been granted.
+     */
+    private void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            if (mMap != null) {
+                mMap.setMyLocationEnabled(true);
+            }
+        } else {
+            // Permission to access the location is missing. Show rationale and request permission
+            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        }
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+        return false;
+    }
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {
+        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            return;
+        }
+
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
+            enableMyLocation();
+        } else {
+            // Permission was denied. Display an error message
+            // Display the missing permission error dialog when the fragments resume.
+            permissionDenied = true;
+        }
+    }
+
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        if (permissionDenied) {
+            // Permission was not granted, display error dialog.
+            showMissingPermissionError();
+            permissionDenied = false;
+        }
+    }
+
+    /**
+     * Displays a dialog with error message explaining that the location permission is missing.
+     */
+    private void showMissingPermissionError() {
+        PermissionUtils.PermissionDeniedDialog
+                .newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
+
 }

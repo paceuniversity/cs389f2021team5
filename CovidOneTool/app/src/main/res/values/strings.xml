@@ -6,4 +6,7 @@
     <string name="time">Time</string>
     <string name="empty_content">Press [ADD] button to add a new document!</string>
     <string name="status">Status</string>
+    <string name="location_permission_denied">location_permission_denied</string>
+    <string name="permission_required_toast">permission_required_toast</string>
+    <string name="permission_rationale_location">permission_rationale_location</string>
 </resources>

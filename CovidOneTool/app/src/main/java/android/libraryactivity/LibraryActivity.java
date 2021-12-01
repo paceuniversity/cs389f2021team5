@@ -7,8 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.libraryeditdocactivity.EditDocActivity;
 import android.infoactivity.InfoActivity;
-import android.newsroom.NewsDisplay;
+import android.libraryeditdocactivity.ViewFileActivity;
 import android.newsroom.NewsroomActivity;
+import android.widget.CheckBox;
 import android.widget.Toast;
 import org.litepal.crud.DataSupport;
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.covid_onetool.MainActivity;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class LibraryActivity extends AppCompatActivity {
+public class LibraryActivity extends AppCompatActivity implements documentAdapter.ItemInnerClickListener {
     //要删除的item的标记, String 为fileName
     HashMap<Integer,String> deleStr = new HashMap<>();
     //设置是否在onStart更新数据源的标记
@@ -60,7 +60,24 @@ public class LibraryActivity extends AppCompatActivity {
 
         //适配器初始化，入参为数据源
         adapter = new documentAdapter(documentList, false);
+        adapter.setOnItemClickListener(this);
+        adapter.setOnLongClickListener(new documentAdapter.OnLongClickListener() {
+            @Override
+            public void onLongClick(View view, int position) {
+                if(!isDeleteState && documentList.size()>0){
+                    isDeleteState = true;
+                    deleStr.clear();
+                    documentAdapter.isSelected.put(position, true);
+                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
+                    adapter = new documentAdapter(documentList, true);
+                    adapter.setOnItemClickListener(LibraryActivity.this);
+                    recyclerView.setAdapter(adapter);
+                    deleStr.put(position, documentAdapter.mDocumentList.get(position).getFileName());
+                }
+            }
+        });
         recyclerView.setAdapter(adapter);
+
         //初始化[add]和[delete]按钮
         Button add = (Button)findViewById(R.id.button_AddDoc);
         Button delete = (Button)findViewById(R.id.button_DeleteDoc);
@@ -88,70 +105,6 @@ public class LibraryActivity extends AppCompatActivity {
                 deleteSelections();
             }
         });
-
-        //为RecylerView添加点击时间响应和长按事件响应
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-                if(!isDeleteState && documentList.size()>0){
-                    document mDocument = documentList.get(position);
-                    String fileType = mDocument.getFileType().toString();
-                    String fileName = mDocument.getFileName().toString();
-                    boolean fileStatus = mDocument.getFileStatus();
-                    String startDate = mDocument.getStartDate();
-                    String expirationDate = mDocument.getExpirationDate();
-                    String fileDescription = mDocument.getFileDescription().toString();
-                    Intent intent = new Intent(LibraryActivity.this, EditDocActivity.class);
-                    intent.putExtra("id",mDocument.getId()+"");
-                    intent.putExtra("fileType", fileType);
-                    intent.putExtra("fileName", fileName);
-                    intent.putExtra("fileStatus", fileStatus);
-                    intent.putExtra("startDate",startDate);
-                    intent.putExtra("expirationDate",expirationDate);
-                    intent.putExtra("fileDescription", fileDescription);
-                    intent.putExtra("signal", 1);
-                    intent.putExtra("filePath",mDocument.getFilePath());
-                    startActivity(intent);
-                }else if(documentList.size()>0){
-                    CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
-                    if(checkBox.isChecked()){
-                        checkBox.setChecked(false);
-                        deleStr.remove(position);
-                    }else{
-                        deleStr.put(position, documentAdapter.mDocumentList.get(position).getFileName());
-                        checkBox.setChecked(true);
-                    }
-                    //判断deleStr是否为空
-                    if(deleStr.size()==0){
-                        isDeleteState = false;
-                        deleStr.clear();
-                        documentAdapter.isSelected.put(position, false);
-                        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
-                        adapter = new documentAdapter(documentList, false);
-                        recyclerView.setAdapter(adapter);
-                    }
-                }
-
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-                if(!isDeleteState && documentList.size()>0){
-                    isDeleteState = true;
-                    deleStr.clear();
-                    documentAdapter.isSelected.put(position, true);
-                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
-                    adapter = new documentAdapter(documentList, true);
-                    recyclerView.setAdapter(adapter);
-                    deleStr.put(position, documentAdapter.mDocumentList.get(position).getFileName());
-
-                }
-
-            }
-        }));
-
     }
 
     //用户返回该Activity
@@ -263,8 +216,59 @@ public class LibraryActivity extends AppCompatActivity {
         return true;
     }
 
-
+    @Override
+    public void onItemInnerClick(View view,int position){
+        switch (view.getId()){
+            case R.id.tvDetail:
+                document mDocument = documentList.get(position);
+                String fileType = mDocument.getFileType().toString();
+                String fileName = mDocument.getFileName().toString();
+                boolean fileStatus = mDocument.getFileStatus();
+                String startDate = mDocument.getStartDate();
+                String expirationDate = mDocument.getExpirationDate();
+                String fileDescription = mDocument.getFileDescription().toString();
+                Intent intent = new Intent(LibraryActivity.this, EditDocActivity.class);
+                intent.putExtra("id",mDocument.getId()+"");
+                intent.putExtra("fileType", fileType);
+                intent.putExtra("fileName", fileName);
+                intent.putExtra("fileStatus", fileStatus);
+                intent.putExtra("startDate",startDate);
+                intent.putExtra("expirationDate",expirationDate);
+                intent.putExtra("fileDescription", fileDescription);
+                intent.putExtra("signal", 1);
+                intent.putExtra("filePath",mDocument.getFilePath());
+                startActivity(intent);
+                break;
+            case R.id.viewFile:
+                //查看文件
+                document mDocument1 = documentList.get(position);
+                Intent intentFile = new Intent(LibraryActivity.this, ViewFileActivity.class);
+                intentFile.putExtra("filepath",mDocument1.getFilePath());
+                startActivity(intentFile);
+                break;
+            case R.id.checkBox:
+                CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+                if(checkBox.isChecked()){
+                    checkBox.setChecked(false);
+                    deleStr.remove(position);
+                }else{
+                    deleStr.put(position, documentAdapter.mDocumentList.get(position).getFileName());
+                    checkBox.setChecked(true);
+                }
+                //判断deleStr是否为空
+                if(deleStr.size()==0){
+                    isDeleteState = false;
+                    deleStr.clear();
+                    documentAdapter.isSelected.put(position, false);
+                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
+                    adapter = new documentAdapter(documentList, false);
+                    adapter.setOnItemClickListener(this);
+                    recyclerView.setAdapter(adapter);
+                }
+                break;
+        }
     }
+}
 
 
 

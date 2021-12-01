@@ -16,23 +16,6 @@
             android:layout_height="match_parent"
             android:background="@color/title"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvDetail"
-                    android:layout_width="145dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/lefttop"
-                    android:text="Detail"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -57,10 +40,10 @@
                     android:id="@+id/fileName"
                     android:layout_width="215dp"
                     android:layout_height="match_parent"
-                    android:autoSizeTextType="uniform"
                     android:background="@drawable/righttop"
                     android:text="@string/name"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:autoSizeTextType="uniform" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -90,7 +73,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/startDate"
+                    android:id="@+id/expirationDate"
                     android:layout_width="215dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/rightbottom"
@@ -107,7 +90,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="48dp"
                 android:orientation="horizontal">
 
                 <Space
@@ -116,21 +99,22 @@
                     android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/expirationDate"
+                    android:id="@+id/tvDetail"
                     android:layout_width="145dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/leftbottom"
+                    android:text="Detail"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/viewFile"
                     android:layout_width="215dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/rightbottom"
-                    android:text="view file"
+                    android:text="View File"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:textSize="30sp" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -138,54 +122,6 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
-            <!--
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <Button
-                        android:id="@+id/buttonShow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Show" />
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <Button
-                        android:id="@+id/buttonEdit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Edit" />
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <Button
-                        android:id="@+id/buttonDelete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Delete" />
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-                </LinearLayout>
-                -->
         </LinearLayout>
     </RelativeLayout>
 
@@ -195,7 +131,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:layout_marginRight="0dp"
-        android:clickable="false"
         android:visibility="gone" />
 
 </androidx.cardview.widget.CardView>

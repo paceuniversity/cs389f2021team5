@@ -1,11 +1,14 @@
 package android.libraryactivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -18,7 +21,26 @@ import java.util.HashMap;
 import java.util.List;
 
 //布局适配
-public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnLongClickListener{
+
+    private ItemInnerClickListener mItemInnerClickListener;
+
+    public interface ItemInnerClickListener {
+        void onItemInnerClick(View view,int position);
+    }
+
+    public void setOnItemClickListener(ItemInnerClickListener mItemInnerClickListener) {
+        this.mItemInnerClickListener = mItemInnerClickListener;
+    }
+
+    interface OnLongClickListener {
+        void onLongClick(View view, int position);
+    }
+
+    private OnLongClickListener mOnLongClickListener = null;
+    public void setOnLongClickListener(OnLongClickListener listener) {
+        mOnLongClickListener = listener;
+    }
 
     private Boolean multiSelect;//是否为多选待删除状态
     private Context mContext;//上下文
@@ -32,7 +54,6 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView fileType;
         TextView fileName;
         TextView fileStatus;
-        TextView startDate;
         TextView expirationDate;
         CheckBox checkBox;
         TextView filePath;
@@ -46,7 +67,6 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             fileType = (TextView)view.findViewById(R.id.fileType);
             fileName = (TextView)view.findViewById(R.id.fileName);
             fileStatus = (TextView)view.findViewById(R.id.fileStatus);
-            startDate = (TextView)view.findViewById(R.id.startDate);
             expirationDate = view.findViewById(R.id.expirationDate);
             checkBox = (CheckBox) view.findViewById(R.id.checkBox);
             filePath = view.findViewById(R.id.viewFile);
@@ -100,10 +120,19 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     //logic
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         //holder为卡片布局的holder
         if (holder instanceof ViewHolder){
+            ((ViewHolder)holder).checkBox.setTag(position);
+            ((ViewHolder)holder).checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(mItemInnerClickListener!=null) {
+                        mItemInnerClickListener.onItemInnerClick(compoundButton, (int) compoundButton.getTag());
+                    }
+                }
+            });
             //状态栏是否可见
             if(multiSelect){
                 ((ViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
@@ -113,11 +142,13 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }else {
                     isSelected.put(position, false);
                 }
+
             }else {
                 //单选状态下隐藏checkBox
                 isSelected.clear();
                 ((ViewHolder)holder).checkBox.setVisibility(View.GONE);
             }
+
             document mDocument = mDocumentList.get(position);
             ((ViewHolder)holder).fileType.setText(mDocument.getFileType());
             ((ViewHolder)holder).fileName.setText(mDocument.getFileName());
@@ -126,11 +157,32 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else {
                 ((ViewHolder)holder).fileStatus.setText("Invalid");
             }
-            ((ViewHolder)holder).startDate.setText(mDocument.getStartDate());
             ((ViewHolder)holder).expirationDate.setText(mDocument.getExpirationDate());
+            ((ViewHolder)holder).tvDetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(mItemInnerClickListener!=null) {
+                        mItemInnerClickListener.onItemInnerClick(view, position);
+                    }
+                }
+            });
+            ((ViewHolder)holder).filePath.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(mItemInnerClickListener!=null) {
+                        mItemInnerClickListener.onItemInnerClick(view, position);
+                    }
+                }
+            });
+
+            ((ViewHolder)holder).cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mOnLongClickListener.onLongClick(view,position);
+                    return true;
+                }
+            });
         }
-
-
     }
 
     //告诉adapter有多少个item，以便留出足够空间
@@ -139,6 +191,11 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return mDocumentList.size()>0? mDocumentList.size():1;
     }
 
-
-
+    @Override
+    public boolean onLongClick(View view) {
+        if (null != mOnLongClickListener) {
+            mOnLongClickListener.onLongClick(view, (int) view.getTag());
+        }
+        return true;
+    }
 }

@@ -203,16 +203,16 @@ public class EditDocActivity extends AppCompatActivity implements View.OnClickLi
 //                    values.put("fileStatus", mDocument.getFileStatus());
 //                    values.put("fileTime", mDocument.getFileTime().toString());
 //                    values.put("fileDescription", mDocument.getFileDescription().toString());
-                  //  DataSupport.updateAll(document.class, values, "fileName=?", fileName );
+                    //  DataSupport.updateAll(document.class, values, "fileName=?", fileName );
 //                    values.put("fileName", mDocument.getFileName().toString());
-                 //   DataSupport.updateAll(document.class, values, "fileName=?", fileName );
-                   document updateDocument = new document();
-                   updateDocument.setFileType(mDocument.getFileType());
-                   updateDocument.setStartDate(mDocument.getStartDate());
-                   updateDocument.setExpirationDate(mDocument.getExpirationDate());
-                   updateDocument.setFileDescription(mDocument.getFileDescription());
-                   updateDocument.setFileName(mDocument.getFileName());
-                   updateDocument.update(Integer.parseInt(getIntent().getStringExtra("id")));
+                    //   DataSupport.updateAll(document.class, values, "fileName=?", fileName );
+                    document updateDocument = new document();
+                    updateDocument.setFileType(mDocument.getFileType());
+                    updateDocument.setStartDate(mDocument.getStartDate());
+                    updateDocument.setExpirationDate(mDocument.getExpirationDate());
+                    updateDocument.setFileDescription(mDocument.getFileDescription());
+                    updateDocument.setFileName(mDocument.getFileName());
+                    updateDocument.update(Integer.parseInt(getIntent().getStringExtra("id")));
                 }
                 break;
             }
@@ -526,7 +526,7 @@ public class EditDocActivity extends AppCompatActivity implements View.OnClickLi
                 PdfWriter.getInstance(document, new FileOutputStream(pdfpath));
                 document.open();
                 Bitmap bmp = MediaStore.Images.Media.getBitmap(
-                       getContentResolver(), Uri.fromFile(new File(filepath)));
+                        getContentResolver(), Uri.fromFile(new File(filepath)));
                 com.itextpdf.text.Image image =   com.itextpdf.text.Image.getInstance(filepath);
                 if (bmp.getWidth() > documentRect.getWidth()
                         || bmp.getHeight() > documentRect.getHeight()) {
