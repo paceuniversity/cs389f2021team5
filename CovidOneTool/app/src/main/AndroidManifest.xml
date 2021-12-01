@@ -28,6 +28,8 @@
             android:name="android.libraryeditdocactivity.EditDocActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="android.infoactivity.InfoActivity" />
+        <activity android:name="android.newsroom.NewsroomActivity" />
+        <activity android:name="android.newsroom.NewsDisplay" />
         <activity android:name="android.selftestactivity.SelfTestActivity" />
         <activity android:name="android.selftestactivity.testActivity" />
 

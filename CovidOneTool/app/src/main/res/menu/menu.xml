@@ -11,6 +11,9 @@
         android:id="@+id/menu_SelfTest"
         android:title="Self Test" />
     <item
+        android:id="@+id/menu_Newsroom"
+        android:title="Newsroom" />
+    <item
         android:id="@+id/menu_MoreInfo"
         android:title="More Info..." />
 </menu>

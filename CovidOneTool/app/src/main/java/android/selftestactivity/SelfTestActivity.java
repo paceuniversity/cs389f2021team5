@@ -3,6 +3,8 @@ package android.selftestactivity;
 import android.content.Intent;
 import android.infoactivity.InfoActivity;
 import android.libraryactivity.LibraryActivity;
+import android.newsroom.NewsDisplay;
+import android.newsroom.NewsroomActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,6 +51,10 @@ public class SelfTestActivity extends AppCompatActivity {
                 Intent goSelfTest = new Intent(SelfTestActivity.this, SelfTestActivity.class);
                 startActivity(goSelfTest);
                 break;
+            }
+            case R.id.menu_Newsroom:{
+                Intent goNewsroom = new Intent(SelfTestActivity.this, NewsroomActivity.class);
+                startActivity(goNewsroom);
             }
             case R.id.menu_MoreInfo:{
                 Intent goMoreInfo = new Intent(SelfTestActivity.this, InfoActivity.class);

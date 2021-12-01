@@ -15,6 +15,7 @@ import android.infoactivity.InfoActivity;
 import android.libraryactivity.LibraryActivity;
 import android.location.Geocoder;
 import android.location.Location;
+import android.newsroom.NewsroomActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -121,6 +122,10 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
                 Intent goSelfTest = new Intent(MainActivity.this, SelfTestActivity.class);
                 startActivity(goSelfTest);
                 break;
+            }
+            case R.id.menu_Newsroom:{
+                Intent goNewsroom = new Intent(MainActivity.this, NewsroomActivity.class);
+                startActivity(goNewsroom);
             }
             case R.id.menu_MoreInfo:{
                 Intent goMoreInfo = new Intent(MainActivity.this, InfoActivity.class);
