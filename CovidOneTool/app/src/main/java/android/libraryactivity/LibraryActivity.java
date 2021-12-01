@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.libraryeditdocactivity.EditDocActivity;
 import android.infoactivity.InfoActivity;
+import android.newsroom.NewsDisplay;
+import android.newsroom.NewsroomActivity;
 import android.widget.Toast;
 import org.litepal.crud.DataSupport;
 import android.os.Bundle;
@@ -246,6 +248,10 @@ public class LibraryActivity extends AppCompatActivity {
                 Intent goSelfTest = new Intent(LibraryActivity.this, SelfTestActivity.class);
                 startActivity(goSelfTest);
                 break;
+            }
+            case R.id.menu_Newsroom:{
+                Intent goNewsroom = new Intent(LibraryActivity.this, NewsroomActivity.class);
+                startActivity(goNewsroom);
             }
             case R.id.menu_MoreInfo:{
                 Intent goMoreInfo = new Intent(LibraryActivity.this, InfoActivity.class);

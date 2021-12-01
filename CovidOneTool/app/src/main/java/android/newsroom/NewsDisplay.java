@@ -13,7 +13,7 @@ import com.example.covid_onetool.R;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewsDisplayActivity extends AppCompatActivity {
+public class NewsDisplay extends AppCompatActivity {
 
     private String newsUrl;
     @Override
