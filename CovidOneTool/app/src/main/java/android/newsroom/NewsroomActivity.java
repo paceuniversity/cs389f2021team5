@@ -2,15 +2,21 @@ package android.newsroom;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.infoactivity.InfoActivity;
+import android.libraryactivity.LibraryActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.selftestactivity.SelfTestActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.covid_onetool.MainActivity;
 import com.example.covid_onetool.R;
 
 import org.jsoup.Jsoup;
@@ -20,12 +26,53 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainNews extends AppCompatActivity {
+public class NewsroomActivity extends AppCompatActivity {
 
     private List<News> newsList;
     private NewsAdapter adapter;
     private Handler handler;
     private ListView lv;
+
+    //加载菜单栏
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    //菜单栏功能：页面跳转
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menu_Statistics:{
+                Intent goStatistics = new Intent(NewsroomActivity.this, MainActivity.class);
+                startActivity(goStatistics);
+                break;
+            }
+            case R.id.menu_MyDocument:{
+                Intent goMyDocument = new Intent(NewsroomActivity.this, LibraryActivity.class);
+                startActivity(goMyDocument);
+                break;
+            }
+            case R.id.menu_SelfTest:{
+                Intent goSelfTest = new Intent(NewsroomActivity.this, SelfTestActivity.class);
+                startActivity(goSelfTest);
+                break;
+            }
+            case R.id.menu_Newsroom:{
+                Intent goNewsroom = new Intent(NewsroomActivity.this, NewsroomActivity.class);
+                startActivity(goNewsroom);
+            }
+            case R.id.menu_MoreInfo:{
+                Intent goMoreInfo = new Intent(NewsroomActivity.this, InfoActivity.class);
+                startActivity(goMoreInfo);
+                break;
+            }
+
+        }
+        return true;
+    }
+
+
     @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +85,13 @@ public class MainNews extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 if(msg.what == 1){
-                    adapter = new  NewsAdapter(MainNews.this,newsList);
+                    adapter = new  NewsAdapter(NewsroomActivity.this,newsList);
                     lv.setAdapter(adapter);
                     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             News news = newsList.get(position);
-                            Intent intent = new Intent(MainNews.this,  NewsDisplayActivity.class);
+                            Intent intent = new Intent(NewsroomActivity.this,  NewsDisplay.class);
                             intent.putExtra("news_url",news.getNewsUrl());
                             startActivity(intent);
                         }
