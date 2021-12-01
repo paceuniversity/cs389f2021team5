@@ -49,4 +49,5 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.39'
     implementation 'com.itextpdf:itextg:5.5.9'
     implementation 'com.google.firebase:firebase-core:18.0.3'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
 }

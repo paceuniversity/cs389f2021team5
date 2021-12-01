@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
             tvDied.setText("Died : "+covidData.getDied());
             tvConfirm.setText("Confirm : "+covidData.getConfirm());
             tvCurConfirm.setText("Curconfirm : "+covidData.getCurConfirm());
-            tvHeal.setText("Heal : "+covidData.getHeal());
+            tvHeal.setText("Recovered : "+covidData.getHeal());
         }
         mMap.setInfoWindowAdapter(this);
         //Register click event listener
@@ -466,21 +466,37 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.InfoWin
      * @return
      */
     public static Location getLocation(Context context, String address) {
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         try {
-            List<Address> addresses = geocoder.getFromLocationName(address,1);
-            if(addresses.size()!=0){
+            Object[] obj = new MapUtils().getCoordinate(address);
+            if (obj != null) {
                 Location location = new Location(address);
-                location.setLatitude(addresses.get(0).getLatitude());
-                location.setLongitude(addresses.get(0).getLongitude());
+                location.setLatitude((double)obj[0]);
+                location.setLongitude((double)obj[1]);
                 return location;
             }else{
                 return null;
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            return new Location(address);
+            return null;
         }
+//        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+//        try {
+//
+//
+//            List<Address> addresses = geocoder.getFromLocationName(address,5);
+//            if(addresses.size()!=0){
+//                Location location = new Location(address);
+//                location.setLatitude(addresses.get(0).getLatitude());
+//                location.setLongitude(addresses.get(0).getLongitude());
+//                return location;
+//            }else{
+//                return null;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new Location(address);
+//        }
     }
 
     private void toSearch(){
