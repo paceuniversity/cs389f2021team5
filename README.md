@@ -58,16 +58,14 @@ The goal of the Covid-19 tool is to provide a toolbox for users to manage data a
 
 **Sprint 2**
 
-* Sprint planning _**: [Statics & Info section](https://docs.google.com/spreadsheets/d/1ZXjuovOq8Lk2VpZvOy0PxUR-YUsTijyQcGmZ7OE__zQ/edit#gid=0)**_
-(8 User Stroies)
-  - Jump to hyperlink
-  - Distributed map
-  - Emergency Contact
-  - News
+* Sprint planning _**: [Statics & Info section](https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=1052653201)**_
+(6 User Stroies)
+  - Select location
+  - Map with Data
   - Real-time data
-  - Notifications
-  - Count down
-  - Count down Time
+  - Automatic validity recognition
+  - Real-time data
+  - Clear document list
 * [Scrums](https://docs.google.com/document/d/16NhVOoML0KmHQNZjHZLYrAaQzszCzOqU0ItQi2hzC4M/edit?usp=sharing) 
 * Sprint demo - video and apk (or equivalent)
 * [Sprint Retrospective](https://docs.google.com/document/d/1OuI2U70hMZ7IMTa5eqX4RxxdiDvFV5PcvDD682LGr5s/edit?usp=sharing)
