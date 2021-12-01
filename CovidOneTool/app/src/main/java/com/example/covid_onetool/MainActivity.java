@@ -16,8 +16,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.infoactivity.InfoActivity;
 import android.libraryactivity.LibraryActivity;
-import android.location.Location;
 import android.newsroom.NewsroomActivity;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
             case R.id.menu_Newsroom:{
                 Intent goNewsroom = new Intent(MainActivity.this, NewsroomActivity.class);
                 startActivity(goNewsroom);
+                break;
             }
             case R.id.menu_MoreInfo:{
                 Intent goMoreInfo = new Intent(MainActivity.this, InfoActivity.class);

@@ -54,6 +54,7 @@ public class InfoActivity extends AppCompatActivity {
             case R.id.menu_Newsroom:{
                 Intent goNewsroom = new Intent(InfoActivity.this, NewsroomActivity.class);
                 startActivity(goNewsroom);
+                break;
             }
             case R.id.menu_MoreInfo:{
                 Intent goMoreInfo = new Intent(InfoActivity.this, InfoActivity.class);

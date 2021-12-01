@@ -205,6 +205,7 @@ public class LibraryActivity extends AppCompatActivity implements documentAdapte
             case R.id.menu_Newsroom:{
                 Intent goNewsroom = new Intent(LibraryActivity.this, NewsroomActivity.class);
                 startActivity(goNewsroom);
+                break;
             }
             case R.id.menu_MoreInfo:{
                 Intent goMoreInfo = new Intent(LibraryActivity.this, InfoActivity.class);

@@ -31,7 +31,6 @@
         <activity android:name="android.selftestactivity.SelfTestActivity" />
         <activity android:name="android.selftestactivity.testActivity" />
         <activity android:name="android.newsroom.NewsroomActivity" />
-        <activity android:name="android.newsroom.NewsDisplay" />
 
 
         <provider

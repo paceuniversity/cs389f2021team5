@@ -139,6 +139,7 @@ public class NewsroomActivity extends AppCompatActivity {
             case R.id.menu_Newsroom:{
                 Intent goNewsroom = new Intent(NewsroomActivity.this, NewsroomActivity.class);
                 startActivity(goNewsroom);
+                break;
             }
             case R.id.menu_MoreInfo:{
                 Intent goMoreInfo = new Intent(NewsroomActivity.this, InfoActivity.class);
