@@ -5,11 +5,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,9 +52,9 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView fileName;
         TextView fileStatus;
         TextView expirationDate;
-        CheckBox checkBox;
         TextView filePath;
         TextView tvDetail;
+        ImageButton checkBtn;
         //不展示Description
         //TextView fileDescription;
 
@@ -68,9 +65,9 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             fileName = (TextView)view.findViewById(R.id.fileName);
             fileStatus = (TextView)view.findViewById(R.id.fileStatus);
             expirationDate = view.findViewById(R.id.expirationDate);
-            checkBox = (CheckBox) view.findViewById(R.id.checkBox);
             filePath = view.findViewById(R.id.viewFile);
             tvDetail = view.findViewById(R.id.tvDetail);
+            checkBtn = view.findViewById(R.id.checkBtn);
         }
     }
 
@@ -124,29 +121,27 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         //holder为卡片布局的holder
         if (holder instanceof ViewHolder){
-            ((ViewHolder)holder).checkBox.setTag(position);
-            ((ViewHolder)holder).checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            ((ViewHolder)holder).checkBtn.setTag(position);
+            ((ViewHolder)holder).checkBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                public void onClick(View view) {
                     if(mItemInnerClickListener!=null) {
-                        mItemInnerClickListener.onItemInnerClick(compoundButton, (int) compoundButton.getTag());
+                        mItemInnerClickListener.onItemInnerClick(view, position);
                     }
                 }
             });
             //状态栏是否可见
             if(multiSelect){
-                ((ViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
-                //当isSelected中有该位置checkBox的显示状态时就加载，没有就默认false
                 if(isSelected.containsKey(position)){
-                    ((ViewHolder)holder).checkBox.setChecked(isSelected.get(position));
-                }else {
-                    isSelected.put(position, false);
+                    ((ViewHolder) holder).checkBtn.setBackgroundResource(R.drawable.checkbox);
+                }else{
+                    ((ViewHolder) holder).checkBtn.setBackgroundResource(R.drawable.checkbox_default);
                 }
-
+                ((ViewHolder) holder).checkBtn.setVisibility(View.VISIBLE);
             }else {
-                //单选状态下隐藏checkBox
+                //隐藏图片按钮
                 isSelected.clear();
-                ((ViewHolder)holder).checkBox.setVisibility(View.GONE);
+                ((ViewHolder)holder).checkBtn.setVisibility(View.GONE);
             }
 
             document mDocument = mDocumentList.get(position);
@@ -197,5 +192,13 @@ public class documentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mOnLongClickListener.onLongClick(view, (int) view.getTag());
         }
         return true;
+    }
+
+    public Boolean getMultiSelect() {
+        return multiSelect;
+    }
+
+    public void setMultiSelect(Boolean multiSelect) {
+        this.multiSelect = multiSelect;
     }
 }

@@ -9,7 +9,6 @@ import android.libraryeditdocactivity.EditDocActivity;
 import android.infoactivity.InfoActivity;
 import android.libraryeditdocactivity.ViewFileActivity;
 import android.newsroom.NewsroomActivity;
-import android.widget.CheckBox;
 import android.widget.Toast;
 import org.litepal.crud.DataSupport;
 import android.os.Bundle;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class LibraryActivity extends AppCompatActivity implements documentAdapter.ItemInnerClickListener {
+public class LibraryActivity extends AppCompatActivity implements documentAdapter.ItemInnerClickListener,documentAdapter.OnLongClickListener {
     //要删除的item的标记, String 为fileName
     HashMap<Integer,String> deleStr = new HashMap<>();
     //设置是否在onStart更新数据源的标记
@@ -61,21 +60,7 @@ public class LibraryActivity extends AppCompatActivity implements documentAdapte
         //适配器初始化，入参为数据源
         adapter = new documentAdapter(documentList, false);
         adapter.setOnItemClickListener(this);
-        adapter.setOnLongClickListener(new documentAdapter.OnLongClickListener() {
-            @Override
-            public void onLongClick(View view, int position) {
-                if(!isDeleteState && documentList.size()>0){
-                    isDeleteState = true;
-                    deleStr.clear();
-                    documentAdapter.isSelected.put(position, true);
-                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
-                    adapter = new documentAdapter(documentList, true);
-                    adapter.setOnItemClickListener(LibraryActivity.this);
-                    recyclerView.setAdapter(adapter);
-                    deleStr.put(position, documentAdapter.mDocumentList.get(position).getFileName());
-                }
-            }
-        });
+        adapter.setOnLongClickListener(this);
         recyclerView.setAdapter(adapter);
 
         //初始化[add]和[delete]按钮
@@ -118,9 +103,7 @@ public class LibraryActivity extends AppCompatActivity implements documentAdapte
             for(document mDocument: docs){
                 documentList.add(mDocument);
             }
-            adapter = new documentAdapter(documentList, false);
-            recyclerView.setAdapter(adapter);
-
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -137,9 +120,6 @@ public class LibraryActivity extends AppCompatActivity implements documentAdapte
             builder.setTitle("oops").setMessage("Please long press to select the documents you want to delete").setPositiveButton("okay", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
-                    adapter = new documentAdapter(documentList, false);
-                    recyclerView.setAdapter(adapter);
                     isDeleteState = false;
                     deleStr.clear();
                 }
@@ -152,17 +132,10 @@ public class LibraryActivity extends AppCompatActivity implements documentAdapte
                 public void onClick(DialogInterface dialog, int which) {
                     for(int i:deleStr.keySet()){
                         DataSupport.deleteAll(document.class, "fileName=?", deleStr.get(i));
+                        documentList.remove(i);
                     }
-                    documentList.clear();
-                    List<document> data = DataSupport.findAll(document.class);
-                    for(document mDocument: data){
-                        documentList.add(mDocument);
-                    }
+                    adapter.setMultiSelect(false);
                     adapter.notifyDataSetChanged();
-                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
-                    recyclerView.setLayoutManager(linearLayoutManager);
-                    adapter = new documentAdapter(documentList, false);
-                    recyclerView.setAdapter(adapter);
                     isDeleteState = false;
                     deleStr.clear();
                     Toast.makeText(LibraryActivity.this, "@.@: Deleted", Toast.LENGTH_SHORT).show();
@@ -171,9 +144,6 @@ public class LibraryActivity extends AppCompatActivity implements documentAdapte
             builder.setNegativeButton("Noooo", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
-                    adapter = new documentAdapter(documentList, false);
-                    recyclerView.setAdapter(adapter);
                     isDeleteState = false;
                     deleStr.clear();
                 }
@@ -247,26 +217,35 @@ public class LibraryActivity extends AppCompatActivity implements documentAdapte
                 intentFile.putExtra("filepath",mDocument1.getFilePath());
                 startActivity(intentFile);
                 break;
-            case R.id.checkBox:
-                CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
-                if(checkBox.isChecked()){
-                    checkBox.setChecked(false);
+            case R.id.checkBtn:
+                if( documentAdapter.isSelected.containsKey(position)) {
+                    documentAdapter.isSelected.remove(position);
                     deleStr.remove(position);
                 }else{
+                    documentAdapter.isSelected.put(position,true);
                     deleStr.put(position, documentAdapter.mDocumentList.get(position).getFileName());
-                    checkBox.setChecked(true);
                 }
-                //判断deleStr是否为空
+                adapter.notifyDataSetChanged();
+
                 if(deleStr.size()==0){
                     isDeleteState = false;
                     deleStr.clear();
-                    documentAdapter.isSelected.put(position, false);
-                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_doc);
-                    adapter = new documentAdapter(documentList, false);
-                    adapter.setOnItemClickListener(this);
-                    recyclerView.setAdapter(adapter);
+                    adapter.setMultiSelect(false);
+                    adapter.notifyDataSetChanged();
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onLongClick(View view, int position) {
+        if(!isDeleteState && documentList.size()>0){
+            isDeleteState = true;
+            deleStr.clear();
+            documentAdapter.isSelected.put(position, true);
+            adapter.setMultiSelect(true);
+            adapter.notifyDataSetChanged();
+            deleStr.put(position, documentAdapter.mDocumentList.get(position).getFileName());
         }
     }
 }

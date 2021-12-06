@@ -9,6 +9,7 @@ public class CovidData {
     private String city;
     private double latitude;
     private double longitude;
+    private String code;
 
     public String getxArea() {
         return xArea;
@@ -72,5 +73,13 @@ public class CovidData {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

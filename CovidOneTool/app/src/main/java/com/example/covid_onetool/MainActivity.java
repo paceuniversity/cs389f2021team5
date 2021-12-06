@@ -1,6 +1,7 @@
 package com.example.covid_onetool;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -11,31 +12,36 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import android.Manifest;
-import android.content.Context;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.infoactivity.InfoActivity;
 import android.libraryactivity.LibraryActivity;
 import android.newsroom.NewsroomActivity;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.selftestactivity.SelfTestActivity;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.util.Log;
+import android.utils.Country;
+import android.utils.DBOpenHelper;
+import android.utils.FetchAddressIntentService;
+import android.utils.Place;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,37 +50,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import android.location.Geocoder;
+import org.json.JSONException;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
+import com.google.android.gms.common.api.GoogleApiClient;
+import android.os.ResultReceiver;
 
-public class MainActivity extends AppCompatActivity implements OnMyLocationButtonClickListener,OnMyLocationClickListener,GoogleMap.InfoWindowAdapter, GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener,OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback{
+public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,GoogleMap.OnMarkerDragListener,ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private GoogleMap mMap;
-    private List<CovidData> list = new ArrayList<>();
-    private boolean mMarkerLoaded = false;
-    private Marker clickMarker;
-    private GetAddressTask mGetAddTack = null;
-    private View mInfoWindowContent = null;
-    private TextView tvHeal,tvDied,tvConfirm,tvCurConfirm;
-    private EditText etSearch;
-    private String baiduMapKey = "B5j2lNjl4TtDwa73vpqeF9aSX3edmam6";
     /**
      * Request code for location permission request.
      *
@@ -82,6 +71,31 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
      */
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
+    /**
+     * Flag indicating whether a requested permission has been denied after returning in
+     * {@link #onRequestPermissionsResult(int, String[], int[])}.
+     */
+    private boolean mPermissionDenied = false;
+
+    private GoogleApiClient mGoogleApiClient;
+    private GoogleMap mMap;
+    private Location mLastLocation;
+    private AddressResultReceiver mResultReceiver;
+    /**
+     * 用来判断用户在连接上Google Play services之前是否有请求地址的操作
+     */
+    private boolean mAddressRequested;
+    /**
+     * 地图上锚点
+     */
+    private Marker perth ;
+    private LatLng lastLatLng,perthLatLng;
+    private List<CovidData> list = new ArrayList<>();
+    private TextView tvHeal,tvDied,tvConfirm,tvCurConfirm;
+    private EditText etSearch;
+    private String baiduMapKey = "B5j2lNjl4TtDwa73vpqeF9aSX3edmam6";
+    private DBOpenHelper dbOpenHelper;
+    private ArrayList<Country> allCountries = new ArrayList<>();
     /**
      * Flag indicating whether a requested permission has been denied after returning in
      * {@link #onRequestPermissionsResult(int, String[], int[])}.
@@ -98,10 +112,20 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
+
 
         setContentView(R.layout.activity_main);
+        dbOpenHelper = new DBOpenHelper(this);
 
+        try {
+            Country.load(this);
+            allCountries.addAll(Country.getAll());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        initData();
         etSearch = findViewById(R.id.etLocation);
         findViewById(R.id.searchBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +139,17 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
         tvHeal = findViewById(R.id.tvHeal);
         tvDied = findViewById(R.id.tvDied);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        //接收FetchAddressIntentService返回的结果
+        mResultReceiver = new AddressResultReceiver(new Handler());
+        //创建GoogleAPIClient实例
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+        //取得SupportMapFragment,并在地图准备好后调用onMapReady
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -227,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
 
     //Handler方式实现子线程和主线程间的通信
     Handler mHandler=new Handler() {
+        @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
             if (SUCCESS == msg.what) {
@@ -241,16 +276,34 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
                     String heal = obj.getString("heal");//治愈人数
 
                     CovidData covidData = new CovidData();
-                    covidData.setxArea(xArea);
+                    String en=xArea;
+                    String code = xArea;
+
+                    for (Country country : allCountries) {
+                        if(xArea.contains(country.name)){
+                            en=country.name_en;
+                            code=country.code;
+                            break;
+                        }
+                    }
+                    covidData.setxArea(en);
                     covidData.setCity("");
+                    covidData.setCode(code);
                     covidData.setConfirm(confirm);
                     covidData.setCurConfirm(curConfirm);
                     covidData.setDied(died);
                     covidData.setHeal(heal);
-                    getLocation(xArea,covidData);
+
+                    Place place = dbOpenHelper.getPlace(xArea,"");
+                    if(place==null) {
+                        getLocation(xArea, covidData);
+                    }else{
+                        covidData.setLatitude(Double.parseDouble(place.getLat()));
+                        covidData.setLongitude(Double.parseDouble(place.getLng()));
+                        list.add(covidData);
+                    }
 
                     JSONArray sublist = obj.getJSONArray("subList");
-                    //  getLocation(xArea,covidData,sublist);
 
                     for(int j=0;j<sublist.size();j++){
                         JSONObject subobj = sublist.getJSONObject(j);
@@ -261,19 +314,39 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
                         String sub_heal = subobj.getString("heal");
 
                         CovidData sub_covidData = new CovidData();
-                        sub_covidData.setxArea(xArea);
-                        sub_covidData.setCity(city);
+                        if(en.equals("")) {
+                            sub_covidData.setxArea(xArea);
+                        }else{
+                            sub_covidData.setxArea(en);
+                        }
+                        String en_city=city;
+                        String code_city = city;
+                        for (Country country : allCountries) {
+                            if(city.contains(country.name)){
+                                en_city=country.name_en;
+                                code_city = country.code;
+                                break;
+                            }
+                        }
+                        sub_covidData.setCity(en_city);
+                        sub_covidData.setCode(code_city);
                         sub_covidData.setConfirm(sub_confirm);
                         sub_covidData.setCurConfirm(sub_curConfirm);
                         sub_covidData.setDied(sub_died);
                         sub_covidData.setHeal(sub_heal);
-                        sub_covidData.setLatitude(0.0);
-                        sub_covidData.setLongitude(0.0);
+                        if(place==null){
+                            place = dbOpenHelper.getPlace(xArea,"");
+                        }
+                        if(place==null){
+                            sub_covidData.setLatitude(0);
+                            sub_covidData.setLongitude(0);
+                        }else {
+                            sub_covidData.setLatitude(Double.parseDouble(place.getLat()));
+                            sub_covidData.setLongitude(Double.parseDouble(place.getLng()));
+                        }
                         list.add(sub_covidData);
-                        // getLocation(city,sub_covidData);
                     }
                 }
-                System.out.println("-----");
             } else if (ERROR == msg.what) {
                 String info = (String) msg.obj;
                 Toast.makeText(MainActivity.this, info, Toast.LENGTH_SHORT).show();
@@ -282,211 +355,12 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
     };
 
     /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        // Sets the map type to be "hybrid"
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        if(list.size()==0){
-            // Add a marker in Sydney and move the camera
-            LatLng adelaide = new LatLng(37.34, 126.58);
-            // mMap.addMarker(new MarkerOptions().position(adelaide).title("Marker in Adelaide"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(adelaide));
-            tvDied.setText("Died : --");
-            tvConfirm.setText("Confirm : --");
-            tvCurConfirm.setText("Curconfirm : --");
-            tvHeal.setText("Heal : --");
-        }else{
-            CovidData covidData = list.get(0);
-            LatLng latLng = new LatLng(covidData.getLatitude(),covidData.getLongitude());
-            MarkerOptions mMarkOption = new MarkerOptions();
-            mMarkOption.draggable(true);
-            mMarkOption.position(latLng);
-            if(covidData.getCity().equals("")) {
-                mMarkOption.title(covidData.getxArea());
-            }else{
-                mMarkOption.title(covidData.getCity());
-            }
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            tvDied.setText("Died : "+covidData.getDied());
-            tvConfirm.setText("Confirm : "+covidData.getConfirm());
-            tvCurConfirm.setText("Curconfirm : "+covidData.getCurConfirm());
-            tvHeal.setText("Heal : "+covidData.getHeal());
-        }
-        mMap.setInfoWindowAdapter(this);
-        //Register click event listener
-        mMap.setOnMarkerClickListener(this);
-        //Register drag event listener
-        mMap.setOnMarkerDragListener(this);
-    }
-
-    //The returned view will be used to construct the display content of the info window and retain the original window background and frame
-    @Override
-    public View getInfoContents(Marker marker) {
-        //Fill the layout of a view
-        LayoutInflater mInflater = LayoutInflater.from(this);
-        if(mInfoWindowContent == null){
-            mInfoWindowContent = mInflater.inflate(R.layout.map_info, null);
-        }
-
-        //Settings Icon
-        ImageView infoImage = (ImageView)mInfoWindowContent.findViewById(R.id.map_info_image);
-        infoImage.setImageResource(R.drawable.map);
-        //setting title
-        TextView infoTitle = (TextView)mInfoWindowContent.findViewById(R.id.map_info_title);
-        infoTitle.setText(marker.getTitle());
-        //setting snippet
-        TextView infoSnippet = (TextView)mInfoWindowContent.findViewById(R.id.map_info_snippet);
-        infoSnippet.setText(marker.getSnippet());
-        return mInfoWindowContent;
-    }
-
-    //The returned view will be used to construct the window of the entire info window
-    @Override
-    public View getInfoWindow(Marker marker) {
-        return null;
-    }
-
-    /* OnMarkerDragListener start */
-    @Override
-    public void onMarkerDrag(Marker marker) {
-    }
-
-    @Override
-    public void onMarkerDragEnd(Marker marker) {
-    }
-
-    @Override
-    public void onMarkerDragStart(Marker marker) {
-        if(marker.isInfoWindowShown())
-            marker.hideInfoWindow();
-        mMarkerLoaded = false;
-    }
-    /* OnMarkerDragListener  end */
-
-    /* OnMarkerClickListener start */
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        clickMarker = marker;
-        if(mMarkerLoaded == false)
-            getAddressOfMarker();
-        return false;
-    }
-    /* OnMarkerClickListener end */
-
-    private void getAddressOfMarker(){
-        if(mGetAddTack != null){
-            mGetAddTack.cancel(true);
-        }
-        mGetAddTack = new GetAddressTask(this);
-        mGetAddTack.execute(clickMarker.getPosition());
-    }
-
-    private class GetAddressTask extends AsyncTask<LatLng, Void, String[]> {
-        Context mContext;
-
-        public GetAddressTask(Context context) {
-            super();
-            mContext = context;
-        }
-
-        @Override
-        protected void onPreExecute(){
-            clickMarker.setTitle("Marker");
-            clickMarker.setSnippet(" ");
-            if(clickMarker.isInfoWindowShown())
-                clickMarker.showInfoWindow();
-        }
-
-        @Override
-        protected void onPostExecute(String[] result){
-            if(result == null)
-                return;
-            if(clickMarker != null){
-                if((result[1] != null) && (result[0] != null)){
-                    clickMarker.setTitle(result[0]);
-                    clickMarker.setSnippet(result[1]);
-                    if(clickMarker.isInfoWindowShown()) {
-                        clickMarker.showInfoWindow();
-                    }else{
-                        clickMarker.setTitle("Marker");
-                        clickMarker.setSnippet("");
-                        if(clickMarker.isInfoWindowShown())
-                            clickMarker.showInfoWindow();
-                    }
-                }
-                mMarkerLoaded = true;
-            }
-        }
-
-        @Override
-        protected String[] doInBackground(LatLng... params) {
-            LatLng latlng = params[0];
-            String[] result = new String[2];
-            //To send a request using the get method, you need to add the parameter after the URL, and use? Connection, parameters separated by &
-            String urlString = "http://maps.google.com/maps/api/geocode/xml?language=zh-CN&sensor=true&latlng=";//31.1601,121.3962";
-            //Generate request object
-            HttpGet httpGet = new HttpGet(urlString + latlng.latitude + "," + latlng.longitude);
-            HttpClient httpClient = new DefaultHttpClient();
-            InputStream inputStream = null;
-            HttpResponse mHttpResponse = null;
-            HttpEntity mHttpEntity = null;
-            try{
-                mHttpResponse = httpClient.execute(httpGet);
-                mHttpEntity = mHttpResponse.getEntity();
-                inputStream = mHttpEntity.getContent();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String line = "";
-                String startTag = "<formatted_address>";
-                String endTag = "</formatted_address>";
-                while (null != (line = bufferedReader.readLine())){
-                    if(isCancelled())
-                        break;
-                    line = line.trim();
-                    String low = line.toLowerCase(Locale.getDefault());
-                    if(low.startsWith(startTag)){
-                        int endIndex = low.indexOf(endTag);
-                        String addr = line.substring(startTag.length(), endIndex);
-                        if((addr != null) && (addr.length() >0)){
-                            result[1] = addr;
-                            result[0] = "Marker";
-                            break;
-                        }
-                    }
-                }
-            }
-            catch (Exception e){
-                System.out.println("Exception in GetAddressTask doInBackground():" + e);
-            }
-            finally{
-                try{
-                    if(inputStream != null)
-                        inputStream.close();
-                }
-                catch (IOException e){
-                    System.out.println("IOException in GetAddressTask doInBackground():" + e);
-                }
-            }
-            return result;
-        }
-    }
-
-    /**
      * 根据地名返回一个有经纬度location,如果查询不到经纬度  则默认经纬度是0
      * @param address
      * @return
      */
-    //public void getLocation(String address,CovidData covidData,JSONArray sublist) {
     public void getLocation(String address,CovidData covidData) {
-
+        System.out.println(address);
         try {
             address = java.net.URLEncoder.encode(address, "UTF-8");
         } catch (UnsupportedEncodingException e1) {
@@ -507,36 +381,38 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
                     Response response = call.execute();
                     if (response.isSuccessful()) {
                         String info = response.body().string();
-                        JSONObject jsonObject = JSON.parseObject(info);
+                        if(info.startsWith("<!DOCTYPE html>")){
 
-                        String status=jsonObject.getString("status");
-                        if(status.equals("OK")){
-                            Object object = jsonObject.get("result");
-                            if (object instanceof JSONObject) {
-                                JSONObject resultObject = jsonObject.getJSONObject("result");
-                                JSONObject locationObj = resultObject.getJSONObject("location");
-                                covidData.setLongitude(locationObj.getFloatValue("lng"));
-                                covidData.setLatitude(locationObj.getFloatValue("lat"));
-                                list.add(covidData);
-//                                for(int j=0;j<sublist.size();j++){
-//                                    JSONObject subobj = sublist.getJSONObject(j);
-//                                    String city = subobj.getString("city");
-//                                    String sub_confirm = subobj.getString("confirm");
-//                                    String sub_died = subobj.getString("died");
-//                                    String sub_curConfirm=subobj.getString("curConfirm");
-//                                    String sub_heal = subobj.getString("heal");
-//
-//                                    CovidData sub_covidData = new CovidData();
-//                                    sub_covidData.setxArea(covidData.getxArea());
-//                                    sub_covidData.setCity(city);
-//                                    sub_covidData.setConfirm(sub_confirm);
-//                                    sub_covidData.setCurConfirm(sub_curConfirm);
-//                                    sub_covidData.setDied(sub_died);
-//                                    sub_covidData.setHeal(sub_heal);
-//                                    sub_covidData.setLatitude(locationObj.getFloatValue("lng"));
-//                                    sub_covidData.setLongitude(locationObj.getFloatValue("lat"));
-//                                    list.add(sub_covidData);
-//                                }
+                        }else {
+                            JSONObject jsonObject = JSON.parseObject(info);
+                            String status = jsonObject.getString("status");
+                            if (status.equals("OK")) {
+                                Object object = jsonObject.get("result");
+                                if (object instanceof JSONArray) {
+                                    JSONArray resultArr = jsonObject.getJSONArray("result");
+                                    if (resultArr.size() == 0) {
+                                        covidData.setLongitude(0);
+                                        covidData.setLatitude(0);
+                                        list.add(covidData);
+                                        Place place = dbOpenHelper.getPlace(covidData.getxArea(), covidData.getCity());
+                                        if (place == null) {
+                                            dbOpenHelper.addPlace(covidData.getxArea(), covidData.getCity(), covidData.getLatitude() + "", covidData.getLongitude() + "");
+                                        }
+                                    }
+                                }
+                                if (object instanceof JSONObject) {
+                                    JSONObject resultObject = jsonObject.getJSONObject("result");
+                                    if (resultObject.getJSONObject("location") != null) {
+                                        JSONObject locationObj = resultObject.getJSONObject("location");
+                                        covidData.setLongitude(locationObj.getFloatValue("lng"));
+                                        covidData.setLatitude(locationObj.getFloatValue("lat"));
+                                        list.add(covidData);
+                                        Place place = dbOpenHelper.getPlace(covidData.getxArea(), covidData.getCity());
+                                        if (place == null) {
+                                            dbOpenHelper.addPlace(covidData.getxArea(), covidData.getCity(), covidData.getLatitude() + "", covidData.getLongitude() + "");
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -548,20 +424,29 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
     }
 
     private void toSearch(){
-        String location = etSearch.getText().toString();
+        String location = etSearch.getText().toString().replaceAll(" ","").toLowerCase();
         if(location.equals("")){
             Toast.makeText(MainActivity.this,"input country or city",Toast.LENGTH_SHORT).show();
         }else{
             boolean flag=true;
             for(int i=0;i<list.size();i++) {
                 CovidData covidData = list.get(i);
-                if(covidData.getxArea().contains(location)){
-                    LatLng latLng = new LatLng(covidData.getLatitude(),covidData.getLongitude());
-                    MarkerOptions mMarkOption = new MarkerOptions();
-                    mMarkOption.draggable(true);
-                    mMarkOption.position(latLng);
-                    mMarkOption.title(covidData.getxArea());
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                String xarea = covidData.getxArea().replaceAll(" ","").toLowerCase();
+                String city = covidData.getCity().replaceAll(" ","").toLowerCase();
+                String code = covidData.getCode().toLowerCase();
+                if(xarea.equals(location)||city.equals(location)||code.equals(location)){
+                    if(covidData.getLatitude()!=0) {
+                        LatLng latLng = new LatLng(covidData.getLatitude(), covidData.getLongitude());
+                        MarkerOptions mMarkOption = new MarkerOptions();
+                        mMarkOption.draggable(true);
+                        mMarkOption.position(latLng);
+                        mMarkOption.title(covidData.getxArea());
+                        mMap.addMarker(mMarkOption);
+                     //   mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
+                    }else{
+                        Toast.makeText(MainActivity.this,"no get LatLng",Toast.LENGTH_SHORT).show();
+                    }
                     tvDied.setText("Died : "+covidData.getDied());
                     tvConfirm.setText("Confirm : "+covidData.getConfirm());
                     tvCurConfirm.setText("Curconfirm : "+covidData.getCurConfirm());
@@ -577,58 +462,101 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
     }
 
     /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setOnMyLocationButtonClickListener(this);
+        mMap.setOnMarkerDragListener(this);
+        enableMyLocation();
+    }
+
+    /**
+     * 检查是否已经连接到 Google Play services
+     */
+    private void checkIsGooglePlayConn() {
+        Log.i("MapsActivity", "checkIsGooglePlayConn-->" +mGoogleApiClient.isConnected());
+        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
+            startIntentService(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude()));
+        }
+        mAddressRequested = true;
+    }
+
+    /**
      * Enables the My Location layer if the fine location permission has been granted.
      */
     private void enableMyLocation() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            if (mMap != null) {
-                mMap.setMyLocationEnabled(true);
-            }
-        } else {
-            // Permission to access the location is missing. Show rationale and request permission
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission to access the location is missing.
             PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
-                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+                    android.Manifest.permission.ACCESS_FINE_LOCATION, true);
+        } else if (mMap != null) {
+            // Access to the location has been granted to the app.
+            mMap.setMyLocationEnabled(true);
         }
     }
 
+    /**
+     * '我的位置'按钮点击时的调用
+     * @return
+     */
     @Override
     public boolean onMyLocationButtonClick() {
         Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
+        if (mLastLocation != null) {
+            Log.i("MapsActivity", "Latitude-->" + String.valueOf(mLastLocation.getLatitude()));
+            Log.i("MapsActivity", "Longitude-->" + String.valueOf(mLastLocation.getLongitude()));
+        }
+        if (lastLatLng != null)
+            perth.setPosition(lastLatLng);
+        checkIsGooglePlayConn();
         return false;
     }
 
-    @Override
-    public void onMyLocationClick(@NonNull Location location) {
-        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+    /**
+     * 启动地址搜索Service
+     */
+    protected void startIntentService(LatLng latLng) {
+        Intent intent = new Intent(this, FetchAddressIntentService.class);
+        intent.putExtra(FetchAddressIntentService.RECEIVER, mResultReceiver);
+        intent.putExtra(FetchAddressIntentService.LATLNG_DATA_EXTRA, latLng);
+        startService(intent);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            Toast.makeText(getApplicationContext(), "Permission to access the location is missing.", Toast.LENGTH_LONG).show();
             return;
         }
-
-        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Enable the my location layer if the permission has been granted.
             enableMyLocation();
         } else {
-            // Permission was denied. Display an error message
             // Display the missing permission error dialog when the fragments resume.
-            permissionDenied = true;
+            mPermissionDenied = true;
         }
     }
 
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        if (permissionDenied) {
+        if (mPermissionDenied) {
             // Permission was not granted, display error dialog.
             showMissingPermissionError();
-            permissionDenied = false;
+            mPermissionDenied = false;
         }
     }
 
@@ -640,4 +568,117 @@ public class MainActivity extends AppCompatActivity implements OnMyLocationButto
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.i("MapsActivity", "--onConnected--" );
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplicationContext(),"Permission to access the location is missing.",Toast.LENGTH_LONG).show();
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            displayPerth(true,lastLatLng);
+            initCamera(lastLatLng);
+            if (!Geocoder.isPresent()) {
+                Toast.makeText(this, "No geocoder available",Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (mAddressRequested) {
+                startIntentService(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude()));
+            }
+        }
+    }
+
+    /**
+     * 添加标记
+     */
+    private void displayPerth(boolean isDraggable,LatLng latLng) {
+        if (perth==null){
+            perth = mMap.addMarker(new MarkerOptions().position(latLng).title("Your Position"));
+            perth.setDraggable(isDraggable); //设置可移动
+        }
+
+    }
+
+    /**
+     * 将地图视角切换到定位的位置
+     */
+    private void initCamera(final LatLng sydney) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney,14));
+                    }
+                });
+            }
+        }).start();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        perthLatLng = marker.getPosition() ;
+        startIntentService(perthLatLng);
+    }
+
+
+    class AddressResultReceiver extends ResultReceiver {
+        private String mAddressOutput;
+
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+
+            mAddressOutput = resultData.getString(FetchAddressIntentService.RESULT_DATA_KEY);
+            if (resultCode == FetchAddressIntentService.SUCCESS_RESULT) {
+                Log.i("MapsActivity", "mAddressOutput-->" + mAddressOutput);
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Position")
+                        .setMessage(mAddressOutput)
+                        .create()
+                        .show();
+            }
+
+        }
+    }
 }

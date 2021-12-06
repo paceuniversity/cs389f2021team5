@@ -32,7 +32,6 @@ public class NewsroomActivity extends AppCompatActivity {
 
     private List<News> newsList;
     private NewsAdapter adapter;
-    private Handler handler;
     private ListView lv;
 
     //加载菜单栏
@@ -41,39 +40,26 @@ public class NewsroomActivity extends AppCompatActivity {
         return true;
     }
 
-
-
-
     @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.news_main);
         newsList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.news_lv);
-        getNews();
-        handler = new Handler(){
+        adapter = new  NewsAdapter(NewsroomActivity.this,newsList);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void handleMessage(Message msg) {
-                if(msg.what == 1){
-                    adapter = new  NewsAdapter(NewsroomActivity.this,newsList);
-                    lv.setAdapter(adapter);
-                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            News news = newsList.get(position);
-                            Intent intent = new Intent(NewsroomActivity.this,  NewsDisplay.class);
-                            intent.putExtra("news_url",news.getNewsUrl());
-                            startActivity(intent);
-                        }
-                    });
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                News news = newsList.get(position);
+                Intent intent = new Intent(NewsroomActivity.this,  NewsDisplay.class);
+                intent.putExtra("news_url",news.getNewsUrl());
+                startActivity(intent);
             }
-        };
-
+        });
+        getNews();
     }
-
-
 
     private void getNews(){
 
@@ -116,6 +102,15 @@ public class NewsroomActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what == 1){
+                adapter.notifyDataSetChanged();
+            }
+        }
+    };
 
     //菜单栏功能：页面跳转
     @Override
