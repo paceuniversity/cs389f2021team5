@@ -46,6 +46,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -205,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
                 e.printStackTrace();
                 Message msg = new Message();
                 msg.what = ERROR;
-                msg.obj = "网络请求失败";
+                msg.obj = "Network Request Failed";
                 mHandler.sendMessage(msg);
             }
 
@@ -442,8 +443,13 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
                         mMarkOption.position(latLng);
                         mMarkOption.title(covidData.getxArea());
                         mMap.addMarker(mMarkOption);
-                     //   mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                        //   mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
+                        mMap.addCircle(new CircleOptions()
+                                .center(latLng)
+                                .radius(800)
+                                .fillColor(0x70ffffff))
+                                .setStrokeWidth(0);
                     }else{
                         Toast.makeText(MainActivity.this,"no get LatLng",Toast.LENGTH_SHORT).show();
                     }
@@ -618,6 +624,21 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
                     @Override
                     public void run() {
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney,14));
+                        mMap.addCircle(new CircleOptions()
+                                .center(new LatLng(sydney.latitude, sydney.longitude))
+                                .radius(800)
+                                .fillColor(0x70ffffff))
+                                .setStrokeWidth(0);
+                        for(int i=0;i<list.size();i++){
+                            CovidData cd=list.get(i);
+                            if(sydney.latitude==cd.getLatitude()&&sydney.longitude==cd.getLongitude()){
+                                tvDied.setText("Died : "+cd.getDied());
+                                tvConfirm.setText("Confirm : "+cd.getConfirm());
+                                tvCurConfirm.setText("Curconfirm : "+cd.getCurConfirm());
+                                tvHeal.setText("Heal : "+cd.getHeal());
+                                break;
+                            }
+                        }
                     }
                 });
             }
