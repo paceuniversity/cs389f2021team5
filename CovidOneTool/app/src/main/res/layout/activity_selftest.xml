@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/context">
+
+
+
+        <Button
+            android:id="@+id/self_Test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableLeft="@android:drawable/ic_menu_my_calendar"
+            android:text="Self Test"
+            android:textAllCaps="false"
+            android:textColor="#8696A7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/Qes1"
+            android:layout_width="340dp"
+            android:layout_height="211dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="1. Do you have any of the following symptoms?
+        \n      *Cough
+        \n      *Fever or chills
+        \n      *Shortness of breath or difficulty breathing
+        \n      *Muscle or body aches
+        \n      *Sore throat
+        \n      *New loss of taste or smell
+        \n      *Diarrhea
+        \n      *Nausea or vomiting
+        \n      *Headache
+        \n      *New fatigue
+        \n      *Congestion or runny nose
+
+"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/self_Test" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch1"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="4dp"
+            android:textOff="N"
+            android:textOn="Y"
+            android:thumb="@drawable/thumb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.93"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Qes1"
+            app:showText="true"
+            app:track="@drawable/track" />
+
+        <TextView
+            android:id="@+id/Qes2"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="32dp"
+            android:text="2. In the past two weeks, have you had close contact with someone diagnosed with COVID-19 or been notified that you may have been exposed to it?  "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.183"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch1" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch2"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="4dp"
+            android:textOff="N"
+            android:textOn="Y"
+            android:thumb="@drawable/thumb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.93"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Qes2"
+            app:showText="true"
+            app:track="@drawable/track" />
+
+        <TextView
+            android:id="@+id/Qes3"
+            android:layout_width="340dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="32dp"
+            android:text="3. In the last 14 days, have you been tested positive for the coronavirus that causes COVID-19?"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.161"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch2" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch3"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="4dp"
+            android:textOff="N"
+            android:textOn="Y"
+            android:thumb="@drawable/thumb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.93"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Qes3"
+            app:showText="true"
+            app:track="@drawable/track"/>
+
+        <TextView
+            android:id="@+id/Qes4"
+            android:layout_width="340dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="32dp"
+            android:text="4. In the last two weeks, have you worked or volunteered in a healthcare facility or as a first responder? (Like hospital, medical or dental clinic, long-term care facility, or nursing home)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.258"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch3" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch4"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="4dp"
+            android:textOff="N"
+            android:textOn="Y"
+            android:thumb="@drawable/thumb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.93"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Qes4"
+            app:showText="true"
+            app:track="@drawable/track" />
+
+        <TextView
+            android:id="@+id/Qes5"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="32dp"
+            android:text="5. Are you fully vaccinated against COVID-19?(You are considered fully vaccinated 2 weeks after your second does)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.161"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch4"
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch5"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="4dp"
+            android:textOff="N"
+            android:textOn="Y"
+            android:thumb="@drawable/thumb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.93"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Qes5"
+            app:showText="true"
+            app:track="@drawable/track" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch5" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
