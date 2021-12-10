@@ -64,13 +64,19 @@
         <entry key="..\:/android_workspace/CovidOneTool/app/src/main/res/layout/activity_view_file.xml" value="0.13697916666666668" />
         <entry key="..\:/android_workspace/CovidOneTool/app/src/main/res/layout/document_item.xml" value="0.1" />
         <entry key="..\:/android_workspace/CovidOneTool/app/src/main/res/layout/news_main.xml" value="0.1140625" />
+        <entry key="app/src/main/res/drawable/bg_tv.xml" value="0.3645833333333333" />
+        <entry key="app/src/main/res/drawable/thumb.xml" value="0.3645833333333333" />
+        <entry key="app/src/main/res/drawable/track.xml" value="0.3645833333333333" />
+        <entry key="app/src/main/res/layout/activity_self_test_second.xml" value="0.3484375" />
+        <entry key="app/src/main/res/layout/activity_selftest.xml" value="0.16945288753799392" />
+        <entry key="app/src/main/res/layout/activity_selftest_3.xml" value="0.3484375" />
       </map>
     </option>
   </component>
   <component name="ProjectPlainTextFileTypeManager">
     <file url="file://$PROJECT_DIR$/app/src/main/assets/litepal.xml" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
