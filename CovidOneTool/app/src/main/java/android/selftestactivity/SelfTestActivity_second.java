@@ -62,7 +62,7 @@ public class SelfTestActivity_second extends AppCompatActivity {
     }
 
     private String getAnswer(boolean yes){
-        return yes?"yes":"no";
+        return yes?"YES":"NO";
     }
 
     //菜单栏功能：页面跳转
