@@ -36,6 +36,10 @@
         <activity android:name="android.newsroom.NewsroomActivity" />
         <activity android:name="android.newsroom.NewsDisplay" />
 
+        <activity android:name="android.selftestactivity.SelfTestActivity_3" />
+        <activity
+            android:name="android.selftestactivity.SelfTestActivity_second"
+            android:exported="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

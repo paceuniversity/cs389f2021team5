@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
     private List<CovidData> list = new ArrayList<>();
     private TextView tvHeal,tvDied,tvConfirm,tvCurConfirm;
     private EditText etSearch;
-    private String baiduMapKey = "B5j2lNjl4TtDwa73vpqeF9aSX3edmam6";
+    private String baiduMapKey = "B5j2lNjl4TtDwa73vpqeF9aSX3edmam6";// Baidu Map key API
     private DBOpenHelper dbOpenHelper;
     private ArrayList<Country> allCountries = new ArrayList<>();
     /**
@@ -453,10 +453,10 @@ public class MainActivity extends AppCompatActivity implements GoogleMap.OnMyLoc
                     }else{
                         Toast.makeText(MainActivity.this,"no get LatLng",Toast.LENGTH_SHORT).show();
                     }
-                    tvDied.setText("Died : "+covidData.getDied());
-                    tvConfirm.setText("Confirm : "+covidData.getConfirm());
-                    tvCurConfirm.setText("Curconfirm : "+covidData.getCurConfirm());
-                    tvHeal.setText("Heal : "+covidData.getHeal());
+                    tvConfirm.setText(covidData.getConfirm());
+                    tvCurConfirm.setText(covidData.getCurConfirm());
+                    tvHeal.setText(covidData.getHeal());
+                    tvDied.setText(covidData.getDied());
                     flag=false;
                     break;
                 }

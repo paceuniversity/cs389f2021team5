@@ -1,19 +1,10 @@
 package android.selftestactivity;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.infoactivity.InfoActivity;
-import android.libraryactivity.LibraryActivity;
-import android.libraryactivity.document;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.EditText;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.covid_onetool.MainActivity;
 import com.example.covid_onetool.R;
 
 public class testActivity extends AppCompatActivity {
