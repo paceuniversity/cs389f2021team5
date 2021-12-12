@@ -75,10 +75,20 @@ The goal of the Covid-19 tool is to provide a toolbox for users to manage data a
 
 **Sprint 3** 
 
-* Sprint planning
-* Scrums
-* Sprint demo - video and apk (or equivalent)
-* Sprint retrospective
+* Sprint planning _**: [Selftest](https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=1023325099)**_
+(6 User Stroies)
+  - Self-test report
+  - App reliability
+  - Feedback messages
+  - Self-Test
+  - Customize Switch
+  - Self-Check Detail
+* [Scrums](https://docs.google.com/document/d/1k2nPp-GZE0DnvUGXqKTb0yut0FLUSlRC88N03y2Qv_Q/edit?usp=sharing) 
+* [Sprint Demo](---)
+* [Demo Summary](https://docs.google.com/document/d/1uk5CRtrst1Kllz-9Ta2mtNfrtk5Nk7mFQ8u1FxbkpEU/edit?usp=sharing)
+* [Covid-OneTool_Sprint2.apk](https://drive.google.com/file/d/1fkVdldu9uYHBAvgT7YAy46jfCwdV_A1c/view?usp=sharing)
+* [Sprint Retrospective](https://docs.google.com/document/d/1pgMWu5IKKn8weSYn0LKbLI9GElR7c06QAOgLSXcGjIQ/edit?usp=sharing)
+
 
 **Final presentation**
 
