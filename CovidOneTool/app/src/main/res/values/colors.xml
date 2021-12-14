@@ -11,4 +11,6 @@
     <color name="context">#c1cbd7</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="red">#FF4500</color>
+    <color name="blue">#03A9F4</color>
+
 </resources>
