@@ -96,7 +96,7 @@ The goal of the Covid-19 tool is to provide a toolbox for users to manage data a
 
 * [Presentation](https://docs.google.com/presentation/d/1_3SFhfU_ljfAeFM9kM_VV3BYGXe2jdh4MZSHOjcqF68/edit#slide=id.gc6f80d1ff_0_0)
 
-* [apk](https://drive.google.com/file/d/1vQ65prHNVilXPKTbaziEWJrX5N0wI1n2/view?usp=sharing)
+* [Covid-OneTool.apk](https://drive.google.com/file/d/1vQ65prHNVilXPKTbaziEWJrX5N0wI1n2/view?usp=sharing)
 
 **Process description**
 
