@@ -9,11 +9,11 @@
 
 [![](https://www.linkpicture.com/q/team5_1.png)](https://github.com/paceuniversity/cs389f2021team5)
 
-| Name                                      | Contact Info      | Primary Role    |
-| ----------------------------------------- | ----------------- | --------------- |
-| [Kai Wang](https://github.com/CarviS0302)     | kw87502p@pace.edu | **Product Owner**    |
-| [Bisheng Zeng](https://github.com/Besen-Zeng)       | bz92714p@pace.edu | **Project Manager**   |
-| [Houqi Zhan](https://github.com/HouqiZhan) | hz865689p@pace.edu | **Developer** |
+| Name                                      | Contact Info      |
+| ----------------------------------------- | ----------------- |
+| [Kai Wang](https://github.com/CarviS0302)     | kw87502p@pace.edu |
+| [Bisheng Zeng](https://github.com/Besen-Zeng)       | bz92714p@pace.edu |
+| [Houqi Zhan](https://github.com/HouqiZhan) | hz865689p@pace.edu |
 
 
 # App description
@@ -75,14 +75,26 @@ The goal of the Covid-19 tool is to provide a toolbox for users to manage data a
 
 **Sprint 3** 
 
-* Sprint planning
-* Scrums
-* Sprint demo - video and apk (or equivalent)
-* Sprint retrospective
+* Sprint planning _**: [Selftest](https://docs.google.com/spreadsheets/d/1RePMRRWv7yBRKYANbVbAyTcsCUguQooIgWcC0NjKyNI/edit#gid=1023325099)**_
+(6 User Stroies)
+  - Self-test report
+  - App reliability
+  - Feedback messages
+  - Self-Test
+  - Customize Switch
+  - Self-Check Detail
+* [Scrums](https://docs.google.com/document/d/1k2nPp-GZE0DnvUGXqKTb0yut0FLUSlRC88N03y2Qv_Q/edit?usp=sharing) 
+* [Sprint Demo](https://youtu.be/YGcbajQPLMg)
+* [Demo Summary](https://docs.google.com/document/d/1uk5CRtrst1Kllz-9Ta2mtNfrtk5Nk7mFQ8u1FxbkpEU/edit?usp=sharing)
+* [Covid-OneTool_Sprint3.apk](https://drive.google.com/file/d/1UT_UylZRqqWhW_nsfVEcbT07nXkoeOZL/view?usp=sharing)
+* [Sprint Retrospective](https://docs.google.com/document/d/1pgMWu5IKKn8weSYn0LKbLI9GElR7c06QAOgLSXcGjIQ/edit?usp=sharing)
+
 
 **Final presentation**
 
-**Poster**
+* [Poster]()
+
+* [Presentation](https://docs.google.com/presentation/d/1_3SFhfU_ljfAeFM9kM_VV3BYGXe2jdh4MZSHOjcqF68/edit#slide=id.gc6f80d1ff_0_0)
 
 **Process description**
 
