@@ -92,7 +92,7 @@ The goal of the Covid-OneTool is to provide a toolbox for users to manage data a
 
 **Final presentation**
 
-* [Poster]()
+<img src="https://i.ibb.co/vDV3PQK/Poster-Covid-One-Tool.pngg" width="300">
 
 * [Presentation](https://docs.google.com/presentation/d/1_3SFhfU_ljfAeFM9kM_VV3BYGXe2jdh4MZSHOjcqF68/edit#slide=id.gc6f80d1ff_0_0)
 
